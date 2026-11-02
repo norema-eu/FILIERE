@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Filiera Infrastrutture Intelligenti</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&display=swap">
 <style>
 /* Layout: barra di navigazione fissa + tre viste a hash (#insieme, #p1–#p9, #anagrafica), griglie che si riducono a una colonna su telefono */
 :root{
@@ -205,6 +205,15 @@ body::before{background:#FFFFFF}
 .bar .nav a:hover{color:#111111; background:#F3F1EC}
 .bar .nav a[aria-current="page"]{color:#FFFFFF; background:#FF2700}
 @media (max-width:620px){ .brand .bt{display:none} }
+/* credito NOREMA */
+.credit{display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; margin-top:22px; padding-top:12px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted)}
+.credit .nm{font-family:'Montserrat', var(--f-body); font-weight:600; font-size:13px; letter-spacing:0.24em; color:var(--norema); text-decoration:none; padding-bottom:2px; border-bottom:2px solid var(--norema-accent)}
+.credit .nm:hover{color:var(--norema-accent)}
+.credit .sub{padding-left:10px; border-left:1px solid var(--line)}
+:root{--norema:#242965; --norema-accent:#48C1B4}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--norema:#CDEBEC; --norema-accent:#48C1B4} }
+:root[data-theme="dark"]{--norema:#CDEBEC; --norema-accent:#48C1B4}
+@media (max-width:620px){ .credit{justify-content:flex-start} }
 </style>
 
 <header class="bar">
@@ -1089,7 +1098,7 @@ function render(){
   if (m && P[+m[1]-1]) html = viewProject(+m[1]);
   else if (h === 'anagrafica') html = viewAnagrafica();
   else { html = viewInsieme(); cur = 'insieme'; }
-  view.innerHTML = html + `<footer><span>Ipotesi di lavoro. Stime indicative.</span><span>NOREMA · ottobre 2026</span></footer>`;
+  view.innerHTML = html + `<footer><span>Ipotesi di lavoro. Stime indicative.</span><span>Aggiornamento: novembre 2026</span></footer><div class="credit"><span>Realizzato da</span><a class="nm" href="https://www.norema.eu" target="_blank" rel="noopener">NOREMA</a><span class="sub">Europrogettazione e innovazione · norema.eu</span></div>`;
   document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === cur) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   document.title = cur === 'insieme' ? 'Filiera Infrastrutture Intelligenti' : (cur === 'anagrafica' ? 'Anagrafica · Filiera Infrastrutture Intelligenti' : `P${m[1]} ${P[+m[1]-1].title} · Filiera`);
   window.scrollTo(0, 0);
