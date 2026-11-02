@@ -1077,7 +1077,7 @@ function render(){
   if (m && P[+m[1]-1]) html = viewProject(+m[1]);
   else if (h === 'anagrafica') html = viewAnagrafica();
   else { html = viewInsieme(); cur = 'insieme'; }
-  view.innerHTML = html + `<footer><span>Ipotesi di lavoro sulla bozza di Avviso del 23 settembre 2026. Stime indicative.</span><span>NOREMA · ottobre 2026</span></footer>`;
+  view.innerHTML = html + `<footer><span>Ipotesi di lavoro. Stime indicative.</span><span>NOREMA · ottobre 2026</span></footer>`;
   document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === cur) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   document.title = cur === 'insieme' ? 'Filiera Infrastrutture Intelligenti' : (cur === 'anagrafica' ? 'Anagrafica · Filiera Infrastrutture Intelligenti' : `P${m[1]} ${P[+m[1]-1].title} · Filiera`);
   window.scrollTo(0, 0);
