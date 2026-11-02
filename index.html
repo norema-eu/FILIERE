@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Filiera Infrastrutture Intelligenti</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: barra di navigazione fissa + tre viste a hash (#insieme, #p1–#p9, #anagrafica), griglie che si riducono a una colonna su telefono */
+:root{
+  --bg:#F2F4F0; --surface:#FFFFFF; --ink:#101B2A; --muted:#4A5565; --line:#D5DBD2; --soft:#E8ECE5;
+  --accent:#0F766E; --accent-soft:#E0F1EE; --on-accent:#FFFFFF;
+  --warm:#A34F08; --warm-soft:#FBEFE0;
+  --blue:#1D4ED8; --blue-soft:#E6EDFC;
+  --navy:#101B2A; --on-navy:#FFFFFF; --navy-muted:#C3CDD9;
+  --tbc:#6E5200; --tbc-soft:#FFF4CF;
+  --pmi:#101B2A; --tp:#0F766E; --odr:#B45309;
+  --f-display:'Archivo', 'Arial Narrow', system-ui, sans-serif;
+  --f-body:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0D131A; --surface:#151E29; --ink:#E6ECF2; --muted:#A1AEBD; --line:#2A3646; --soft:#1B2633;
+  --accent:#3DB5A6; --accent-soft:#11302C; --on-accent:#06110F;
+  --warm:#E59A52; --warm-soft:#33230F;
+  --blue:#8AAEFF; --blue-soft:#17223B;
+  --navy:#1B2737; --on-navy:#F2F5F8; --navy-muted:#A9B6C6;
+  --tbc:#EBCB62; --tbc-soft:#2D2710;
+  --pmi:#C9D4E1; --tp:#3DB5A6; --odr:#E59A52;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0D131A; --surface:#151E29; --ink:#E6ECF2; --muted:#A1AEBD; --line:#2A3646; --soft:#1B2633;
+  --accent:#3DB5A6; --accent-soft:#11302C; --on-accent:#06110F;
+  --warm:#E59A52; --warm-soft:#33230F;
+  --blue:#8AAEFF; --blue-soft:#17223B;
+  --navy:#1B2737; --on-navy:#F2F5F8; --navy-muted:#A9B6C6;
+  --tbc:#EBCB62; --tbc-soft:#2D2710;
+  --pmi:#C9D4E1; --tp:#3DB5A6; --odr:#E59A52;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--navy)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px}
+h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0; letter-spacing:-0.01em}
+.wrap{max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
+
+/* barra */
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--navy); color:var(--on-navy)}
+.bar .wrap{display:flex; align-items:center; gap:16px; padding-block:10px; flex-wrap:wrap}
+.brand{font-family:var(--f-display); font-weight:800; font-size:15px; letter-spacing:0.01em; color:var(--on-navy); text-decoration:none; margin-right:auto}
+.brand span{color:var(--navy-muted); font-weight:600}
+.nav{display:flex; gap:4px; flex-wrap:wrap}
+.nav a{color:var(--navy-muted); text-decoration:none; font-weight:600; font-size:14px; padding:8px 12px; border-radius:6px; min-height:40px; display:inline-flex; align-items:center}
+.nav a:hover{color:var(--on-navy); background:rgba(255,255,255,0.08)}
+.nav a[aria-current="page"]{color:var(--on-navy); background:rgba(255,255,255,0.14)}
+.pnav{display:flex; gap:4px; flex-wrap:wrap}
+.pnav a{font-size:13px; padding:6px 9px; min-height:34px}
+
+main{padding-block:28px 56px}
+.eyebrow{font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent)}
+.lead{font-size:17px; color:var(--muted); max-width:62ch; margin:0}
+section+section{margin-top:36px}
+.sec-h{display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.sec-h h2{font-size:22px}
+.chips{display:flex; gap:8px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:999px; background:var(--soft); color:var(--ink); white-space:nowrap}
+.chip.dark{background:var(--navy); color:var(--on-navy)}
+.chip.teal{background:var(--accent-soft); color:var(--accent)}
+.chip.warm{background:var(--warm-soft); color:var(--warm)}
+.chip.blue{background:var(--blue-soft); color:var(--blue)}
+.chip.tbc{background:var(--tbc-soft); color:var(--tbc)}
+
+/* hero insieme */
+.hero{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:28px; align-items:end}
+.hero h1{font-size:clamp(34px, 5vw, 56px); line-height:1.02; font-weight:800; margin:8px 0 12px}
+.kpis{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+.kpi.ink{background:var(--navy); border-color:var(--navy); color:var(--on-navy)}
+.kpi.ink .k-l{color:var(--navy-muted)}
+.kpi.teal{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.kpi.teal .k-l{color:var(--on-accent); opacity:0.85}
+.k-l{font-size:12.5px; color:var(--muted)}
+.k-v{font-family:var(--f-display); font-weight:800; font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums}
+.k-s{font-size:12.5px}
+
+.split{height:26px; display:flex; border-radius:5px; overflow:hidden; font-size:12px; font-weight:600}
+.split div{display:flex; align-items:center; padding-inline:8px; white-space:nowrap; overflow:hidden}
+.s-pmi{background:var(--pmi); color:var(--bg)}
+.s-tp{background:var(--tp); color:var(--on-accent); justify-content:center}
+.s-odr{background:var(--odr); color:var(--bg); justify-content:center}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); margin-top:8px}
+.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:5px; vertical-align:-1px}
+
+.grid4{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px}
+.box{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px}
+.box h3{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; font-family:var(--f-body); font-weight:600; margin-bottom:6px}
+.box p{margin:0; font-size:14px}
+.box.inv{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.box.inv h3{color:var(--accent)}
+
+/* card progetto */
+.pcard{display:flex; flex-direction:column; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; text-decoration:none; color:var(--ink); transition:border-color .15s, transform .15s; min-width:0}
+.pcard:hover{border-color:var(--accent); transform:translateY(-2px)}
+.pcard .top{display:flex; justify-content:space-between; align-items:center; gap:8px}
+.pcard .pn{font-family:var(--f-display); font-weight:800; font-size:15px; color:var(--accent)}
+.pcard h3{font-size:20px; line-height:1.15}
+.pcard .d{font-size:13.5px; color:var(--muted); flex:1 1 auto}
+.pcard .money{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.pcard .money b{font-family:var(--f-display); font-size:22px; font-variant-numeric:tabular-nums}
+.pcard .money span{font-size:13px; color:var(--muted)}
+.mini{height:7px; display:flex; border-radius:3px; overflow:hidden; background:var(--soft)}
+.mini i{display:block; height:100%}
+.who{font-size:12.5px; color:var(--muted); line-height:1.4}
+.who b{color:var(--ink); font-weight:600}
+.open{font-size:13px; font-weight:600; color:var(--accent)}
+
+.checks{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px 24px; font-size:14px; margin:0; padding:0; list-style:none}
+.checks li{display:flex; gap:8px}
+.checks li::before{content:"✓"; color:var(--accent); font-weight:700}
+.issues{margin:0; padding-left:20px; font-size:14px; display:grid; gap:6px}
+
+/* pagina progetto */
+.back{display:inline-flex; align-items:center; gap:6px; font-weight:600; text-decoration:none; font-size:14px; min-height:40px}
+.phead{background:var(--navy); color:var(--on-navy); border-radius:12px; padding:24px; display:flex; gap:22px; align-items:center; margin-top:8px}
+.phead .big{font-family:var(--f-display); font-weight:800; font-size:64px; line-height:1; color:var(--accent)}
+.phead h1{font-size:clamp(26px, 4vw, 40px); line-height:1.05}
+.phead p{margin:6px 0 0; color:var(--navy-muted); font-size:16px; max-width:60ch}
+.two{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:18px; align-items:start}
+.prose p{margin:0 0 10px; max-width:66ch}
+.amb dl{margin:0; display:grid; gap:12px}
+.amb dt{font-size:12.5px; color:var(--muted)}
+.amb dd{margin:2px 0 0; font-weight:600}
+.lvl{font-size:12.5px; font-weight:600; color:var(--accent)}
+.tablebox{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:640px}
+th,td{padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{background:var(--soft); font-size:12.5px; font-weight:600; color:var(--muted)}
+td.r,th.r{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.tot td{font-weight:700; border-bottom:none}
+.ename{font-weight:600}
+.ename a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--muted)}
+.ename a:hover{color:var(--accent)}
+.etype{display:block; font-size:12px; color:var(--muted); font-weight:400}
+.pager{display:flex; justify-content:space-between; gap:12px; margin-top:28px; flex-wrap:wrap}
+.pager a{display:inline-flex; flex-direction:column; text-decoration:none; padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); min-width:0; max-width:48%}
+.pager a small{color:var(--muted)}
+.pager a b{font-family:var(--f-display)}
+
+/* anagrafica */
+.tools{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.filter{display:flex; gap:6px; flex-wrap:wrap}
+.filter button{font:inherit; font-size:13.5px; font-weight:600; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 14px; min-height:40px; cursor:pointer}
+.filter button[aria-pressed="true"]{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.search{display:flex; flex-direction:column; gap:2px}
+.search label{font-size:12px; color:var(--muted)}
+.search input{font:inherit; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); min-height:40px; width:min(280px, 100%)}
+.ecards{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:16px}
+.ecard{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.ecard h3{font-size:18px}
+.ecard .row{display:flex; justify-content:space-between; gap:8px; align-items:flex-start}
+.ecard .prof{font-size:13.5px; color:var(--muted); margin:0}
+.ecard dl{margin:0; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px; font-size:13.5px}
+.ecard dt{color:var(--muted)}
+.ecard dd{margin:0; overflow-wrap:anywhere}
+.plinks{display:flex; gap:6px; flex-wrap:wrap}
+.plinks a{font-size:12.5px; font-weight:600; text-decoration:none; padding:3px 9px; border-radius:6px; background:var(--accent-soft); color:var(--accent)}
+.contact{border-top:1px solid var(--line); padding-top:10px; font-size:13.5px}
+.contact .missing{color:var(--tbc); font-weight:600}
+.copy{font:inherit; font-size:12px; font-weight:600; border:1px solid var(--line); background:transparent; color:var(--accent); border-radius:6px; padding:2px 8px; margin-left:6px; cursor:pointer}
+.matrix td.c{text-align:center; font-variant-numeric:tabular-nums; white-space:nowrap}
+.matrix td.c.on{background:var(--accent-soft); color:var(--ink); font-weight:600}
+.matrix th.c{text-align:center}
+.matrix td:first-child{white-space:nowrap}
+.note{font-size:13px; color:var(--muted); margin-top:10px; max-width:80ch}
+footer{border-top:1px solid var(--line); margin-top:40px; padding-top:14px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+@media (max-width:960px){
+  .grid4{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .grid3,.ecards{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .hero,.two{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:620px){
+  .grid4,.grid3,.ecards,.checks{grid-template-columns:minmax(0,1fr)}
+  .phead{flex-direction:column; align-items:flex-start; gap:8px}
+  .phead .big{font-size:44px}
+  .pager a{max-width:100%}
+  .brand{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .pcard{transition:none} .pcard:hover{transform:none} }
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#insieme">Infrastrutture produttive intelligenti <span>· Filiere Tecnologiche</span></a>
+    <nav class="nav" aria-label="Sezioni">
+      <a href="#insieme" data-nav="insieme">Insieme</a>
+      <span class="pnav" id="pnav"></span>
+      <a href="#anagrafica" data-nav="anagrafica">Anagrafica</a>
+    </nav>
+  </div>
+</header>
+
+</head>
+<body>
+<main class="wrap" id="view" aria-live="polite"></main>
+
+<script>
+const ENT = {
+ "tecnopolo": {
+  "name": "Tecnopolo S.p.A.",
+  "type": "Grande impresa",
+  "kind": "cardine",
+  "profile": "Gestore dei poli tecnologici Tiburtino e Castel Romano; coordinatore del R.O.M.E. Digital Hub (EDIH, 25 partner). Soggetto Cardine, Coach e Mandatario unico dell’Insieme.",
+  "sede": "Roma – Tecnopolo Tiburtino",
+  "note": "Grande impresa per controllo pubblico (CCIAA di Roma 96%). Ammissibilità del ruolo tecnico da confermare con quesito a Lazio Innova."
+ },
+ "sapienza": {
+  "name": "Sapienza – Dip. SBAI",
+  "type": "Organismo di Ricerca",
+  "kind": "odr",
+  "profile": "Dipartimento di Scienze di Base e Applicate per l’Ingegneria, Sapienza Università di Roma.",
+  "sede": "Roma"
+ },
+ "cnr": {
+  "name": "CNR",
+  "type": "Organismo di Ricerca",
+  "kind": "odr",
+  "profile": "Consiglio Nazionale delle Ricerche. Istituto da individuare (per la mobilità, ad esempio IASI).",
+  "sede": "Roma"
+ },
+ "microsis": {
+  "name": "MICROSIS",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Consulenza informatica e sviluppo software (ATECO 62.20).",
+  "sede": "Via degli Olmetti 8/a, Formello (RM)"
+ },
+ "aircare": {
+  "name": "AIR-CARE",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Qualità dell’aria indoor e sensori ambientali.",
+  "tbc": true
+ },
+ "ressmart": {
+  "name": "RES SMART",
+  "type": "Startup innovativa",
+  "kind": "imp",
+  "profile": "Smart energy e soluzioni IoT per l’efficienza di edifici e impianti.",
+  "tbc": true
+ },
+ "e20": {
+  "name": "E2.0 ESCo",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Energy Service Company: gestione energetica e servizi di efficienza."
+ },
+ "superelectric": {
+  "name": "SUPERELECTRIC",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Impianti elettrici, misura e integrazione energetica.",
+  "tbc": true
+ },
+ "neperia": {
+  "name": "NEPERIA",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Analisi e sviluppo software; centri di sviluppo a Ragusa e Catania.",
+  "sede": "Roma",
+  "note": "Verificare che il personale dedicato lavori per almeno l’80% delle ore in una sede del Lazio."
+ },
+ "engenie": {
+  "name": "ENGENIE",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Ingegneria degli impianti e modellazione BIM.",
+  "tbc": true
+ },
+ "eureco": {
+  "name": "EURECO ENGINEERING",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Software, cloud e cybersecurity con servizi SOC/NOC; ISO 9001 e ISO/IEC 27001.",
+  "sede": "Roma (sedi anche a Milano, Verona, Bari, Amatrice)",
+  "web": "eureco-eng.it"
+ },
+ "rotech": {
+  "name": "ROTECHNOLOGY",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Ricerca e sviluppo su IoT e sicurezza dei dispositivi.",
+  "tbc": true
+ },
+ "done": {
+  "name": "DONE",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Sistemi di controllo accessi e sensoristica per la mobilità.",
+  "tbc": true
+ },
+ "sigma": {
+  "name": "SIGMA",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Piattaforme e integrazione di servizi digitali.",
+  "tbc": true
+ },
+ "norema": {
+  "name": "NOREMA",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Innovazione, progettazione e modelli di servizio per imprese e territori.",
+  "sede": "Roma"
+ },
+ "iptsat": {
+  "name": "IPT SAT",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "GIS e analisi spaziale, osservazione della Terra, GNSS; distributore Esri. Attiva dal 1987.",
+  "sede": "Roma"
+ },
+ "lab": {
+  "name": "LAB CONSULTING",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Intelligenza artificiale applicata all’analisi dei dati."
+ },
+ "humanativa": {
+  "name": "HUMANATIVA",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Piattaforme di monitoraggio e analisi dei dati.",
+  "tbc": true
+ },
+ "philmark": {
+  "name": "PHILMARK",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Comunicazione e coinvolgimento degli utenti (piccola quota).",
+  "tbc": true
+ },
+ "mainproject": {
+  "name": "MAIN PROJECT",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Piattaforme digitali e cybersecurity; partner del R.O.M.E. Digital Hub."
+ },
+ "olympos": {
+  "name": "OLYMPOS HUB",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Innovazione e strategia digitale; integrazione di servizi edge e digitali.",
+  "sede": "Via Nicolò Tartaglia 11, Roma"
+ },
+ "dtales": {
+  "name": "D-TALES",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Piattaforme applicative e gestione dei dati.",
+  "tbc": true
+ },
+ "digitalmews": {
+  "name": "DIGITAL MEWS",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Servizi digitali e integrazione applicativa.",
+  "tbc": true
+ },
+ "lazioinnova": {
+  "name": "Lazio Innova S.p.A.",
+  "type": "Ente gestore",
+  "kind": "ente",
+  "profile": "Organismo intermedio che gestisce l’Avviso (istruttoria, concessione, erogazioni).",
+  "sede": "Via Marco Aurelio 26/A, Roma",
+  "email": "infobandi@lazioinnova.it",
+  "tel": "06 605160",
+  "note": "Quesiti sull’Avviso: infobandi@lazioinnova.it. PEC: incentivi@pec.lazioinnova.it"
+ },
+ "regione": {
+  "name": "Regione Lazio",
+  "type": "Autorità di gestione",
+  "kind": "ente",
+  "profile": "Direzione Regionale Sviluppo Economico, Attività Produttive e Ricerca – Area Innovazione e Ricerca per le Imprese.",
+  "email": "arearicercaeinnovazione@pec.regione.lazio.it",
+  "note": "PEC per la manifestazione di interesse del Soggetto Cardine, entro il 5 novembre 2026."
+ }
+};
+const INT = {"PMI":0.6,"Startup innovativa":0.6,"Grande impresa":0.4,"Organismo di Ricerca":0.8};
+const P = [
+ {
+  "n": 1,
+  "title": "Smart Space Sensing",
+  "sub": "Rete di sensori ambientali e di occupazione degli spazi con analytics predittiva",
+  "budget": 1200,
+  "green": true,
+  "riserva": false,
+  "tag": "Digitale · Green economy",
+  "desc": [
+   "Il progetto sviluppa una rete di sensori wireless a basso consumo che misura qualità dell’aria, temperatura, rumore e presenza, e una piattaforma che stima in tempo reale l’occupazione di uffici, laboratori e aree comuni.",
+   "Gli algoritmi prevedono picchi di utilizzo e condizioni critiche e suggeriscono azioni sugli spazi e sugli impianti. Il prototipo è validato negli edifici del Tecnopolo Tiburtino."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Internet delle cose, analisi dei dati, rilevamento avanzato"
+  ],
+  "ris3": [
+   "Green economy – Energia",
+   "Sensori e reti wireless per sistemi di misura distribuiti",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai sensori validati in laboratorio alla rete dimostrata negli edifici del Tiburtino",
+  "del": "Prototipo di rete di sensori e piattaforma di analytics predittiva dell’occupazione",
+  "sfr": "Soluzione replicabile per parchi tecnologici, campus ed edifici del terziario",
+  "parts": [
+   [
+    "microsis",
+    "Rete di sensori IoT e piattaforma",
+    540
+   ],
+   [
+    "aircare",
+    "Sensori di qualità dell’aria indoor",
+    372
+   ],
+   [
+    "ressmart",
+    "Modelli energetici e integrazione smart",
+    216
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    72
+   ]
+  ]
+ },
+ {
+  "n": 2,
+  "title": "Energy AI",
+  "sub": "Gestione intelligente dell’energia di edifici e impianti con modelli di AI",
+  "budget": 1300,
+  "green": true,
+  "riserva": false,
+  "tag": "Clean tech · Digitale",
+  "desc": [
+   "Il progetto sviluppa un sistema di energy management che integra contatori, sensori, dati meteo e profili d’uso degli edifici. Modelli di AI prevedono la domanda e ottimizzano climatizzazione, illuminazione e fonti rinnovabili.",
+   "Il sistema è sperimentato sugli impianti di alcuni edifici del Tiburtino, con misura dei risparmi in condizioni reali di esercizio."
+  ],
+  "step": [
+   "Tecnologie pulite ed efficienti",
+   "Tecnologie per l’efficienza energetica inerenti al sistema energetico"
+  ],
+  "ris3": [
+   "Green economy – Energia",
+   "Data-driven energy e Intelligenza Artificiale per il settore dell’energia",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai modelli di previsione validati su dati storici al controllo attivo degli impianti reali",
+  "del": "Prototipo di piattaforma di energy management con moduli di previsione e ottimizzazione",
+  "sfr": "Servizio per gestori di edifici, distretti produttivi e comunità energetiche",
+  "parts": [
+   [
+    "e20",
+    "Capofila · energy management e servizi energetici",
+    520
+   ],
+   [
+    "superelectric",
+    "Impianti, misura e integrazione",
+    468
+   ],
+   [
+    "ressmart",
+    "Algoritmi di ottimizzazione e smart energy",
+    234
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    78
+   ]
+  ]
+ },
+ {
+  "n": 3,
+  "title": "Digital Twin del parco",
+  "sub": "Gemello digitale di edifici e impianti per la manutenzione predittiva",
+  "budget": 1100,
+  "green": false,
+  "riserva": false,
+  "tag": "Digitale",
+  "desc": [
+   "Il progetto costruisce un gemello digitale degli edifici e degli impianti tecnologici, alimentato dai dati di esercizio e dal monitoraggio. Modelli di analisi individuano anomalie e degrado, stimano la vita residua dei componenti e simulano gli interventi.",
+   "Il prototipo è validato su un complesso del Tiburtino, confrontando le previsioni con gli interventi di manutenzione effettivamente necessari."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Intelligenza artificiale e tecnologie di analisi dei dati"
+  ],
+  "ris3": [
+   "Green economy – Efficienza energetica",
+   "Tecnologie e strumenti per riqualificazione e ottimizzazione energetica di sistemi esistenti",
+   "Traiettoria di interesse elevato"
+  ],
+  "trl": "Dal modello digitale validato su dati storici al gemello operativo su un complesso reale",
+  "del": "Prototipo di digital twin con moduli di diagnostica e manutenzione predittiva",
+  "sfr": "Piattaforma per gestori di patrimoni immobiliari e facility management",
+  "parts": [
+   [
+    "neperia",
+    "Sviluppo software del gemello digitale",
+    440
+   ],
+   [
+    "engenie",
+    "Ingegneria degli impianti e modellazione BIM",
+    385
+   ],
+   [
+    "ressmart",
+    "Modelli energetici degli impianti",
+    198
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · dati e test in sito",
+    77
+   ]
+  ]
+ },
+ {
+  "n": 4,
+  "title": "IoT/OT Security",
+  "sub": "Sicurezza cyber delle reti di sensori e degli impianti connessi",
+  "budget": 800,
+  "green": false,
+  "riserva": true,
+  "tag": "Digitale · Sicurezza",
+  "desc": [
+   "Il progetto sviluppa una soluzione di sicurezza per le reti IoT e i sistemi di controllo degli impianti (OT). Il sistema mappa i dispositivi connessi, ne monitora il traffico, rileva comportamenti anomali con il machine learning e attiva procedure di contenimento.",
+   "La soluzione è testata sulle reti tecnologiche del Tiburtino, in condizioni reali e con scenari di attacco simulati."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Tecnologie di cibersicurezza, sistemi di sicurezza e intrusione"
+  ],
+  "ris3": [
+   "Sicurezza",
+   "Soluzioni ICT e digitali per la protezione delle infrastrutture critiche",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dagli algoritmi validati in laboratorio alla protezione di reti reali in esercizio",
+  "del": "Prototipo di piattaforma di monitoraggio e difesa per reti IoT/OT",
+  "sfr": "Servizio di sicurezza gestita per parchi produttivi, utility e PMI manifatturiere",
+  "parts": [
+   [
+    "eureco",
+    "Capofila · cybersecurity, SOC/NOC e protezione IoT/OT",
+    320
+   ],
+   [
+    "rotech",
+    "R&S su sicurezza dei dispositivi IoT",
+    280
+   ],
+   [
+    "sapienza",
+    "Algoritmi di rilevazione delle anomalie",
+    152
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · reti di test",
+    48
+   ]
+  ]
+ },
+ {
+  "n": 5,
+  "title": "Smart Access & Mobility",
+  "sub": "Controllo intelligente di accessi, parcheggi e mobilità interna del polo",
+  "budget": 700,
+  "green": false,
+  "riserva": true,
+  "tag": "Digitale · Mobilità",
+  "desc": [
+   "Il progetto sviluppa un sistema integrato che gestisce in modo sicuro varchi, accessi di persone e veicoli, parcheggi e punti di ricarica. Identità digitali, sensori e regole dinamiche autorizzano, tracciano e ottimizzano i flussi.",
+   "Il sistema è dimostrato sui varchi e sulle aree di sosta del Tiburtino, con imprese e visitatori reali."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Internet delle cose, identità digitale e sistemi di sicurezza"
+  ],
+  "ris3": [
+   "Sicurezza",
+   "Sistemi e soluzioni per la protezione e il controllo degli accessi",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai moduli di controllo validati al banco al sistema in esercizio sui varchi del polo",
+  "del": "Prototipo di piattaforma per accessi, sosta e ricarica, con dispositivi di campo",
+  "sfr": "Soluzione per distretti produttivi, campus, ospedali e infrastrutture critiche",
+  "parts": [
+   [
+    "done",
+    "Capofila · controllo accessi e sensoristica",
+    280
+   ],
+   [
+    "sigma",
+    "Piattaforma e integrazione dei servizi",
+    266
+   ],
+   [
+    "cnr",
+    "Modelli di mobilità intelligente e validazione",
+    105
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    49
+   ]
+  ]
+ },
+ {
+  "n": 6,
+  "title": "GeoRisk",
+  "sub": "Analisi e monitoraggio GIS del territorio per valutare il rischio di cantieri e impianti produttivi",
+  "budget": 900,
+  "green": true,
+  "riserva": true,
+  "tag": "Aerospazio · Digitale",
+  "desc": [
+   "Il progetto sviluppa una piattaforma GIS che integra dati satellitari di osservazione della Terra (incluse le misure di deformazione del suolo), sensori a terra, cartografia e modelli di pericolosità: idrogeologica, sismica, da incendio e da ondate di calore.",
+   "Per ogni cantiere e ogni impianto produttivo esistente la piattaforma stima esposizione e vulnerabilità, calcola un indice di rischio aggiornato nel tempo e segnala le situazioni critiche. Modelli di AI sui dati affinano le stime e le priorità di intervento.",
+   "Il sistema è sperimentato sul Tecnopolo Tiburtino, che ha sia impianti produttivi in esercizio sia aree in edificazione."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Tecnologie di rilevamento avanzato e di analisi dei dati"
+  ],
+  "ris3": [
+   "Aerospazio – Aeronautica",
+   "Servizi spaziali integrati a supporto della prevenzione e gestione del rischio, delle emergenze e della gestione del territorio",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai modelli di rischio validati su casi storici al monitoraggio continuo di siti reali",
+  "del": "Piattaforma GIS di valutazione del rischio con indici per sito e sistema di allerta",
+  "sfr": "Servizio per imprese, gestori di parchi industriali, assicurazioni e pubbliche amministrazioni",
+  "parts": [
+   [
+    "iptsat",
+    "Capofila · GIS, osservazione della Terra e analisi spaziale",
+    500
+   ],
+   [
+    "norema",
+    "Modelli di valutazione del rischio e servizi",
+    225
+   ],
+   [
+    "lab",
+    "AI per l’analisi dei dati e lo scoring del rischio",
+    130
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · siti di test",
+    45
+   ]
+  ]
+ },
+ {
+  "n": 7,
+  "title": "Risorse e circolarità",
+  "sub": "Monitoraggio di acqua, rifiuti e materiali negli edifici produttivi",
+  "budget": 600,
+  "green": true,
+  "riserva": false,
+  "tag": "Clean tech · Green economy",
+  "desc": [
+   "Il progetto sviluppa un sistema di sensori e analisi che misura in continuo i consumi idrici, la produzione e la qualità della raccolta dei rifiuti e i flussi di materiali negli edifici del polo. Il sistema individua perdite e anomalie e supporta riuso e riciclo.",
+   "Il prototipo è validato nel Tiburtino, con indicatori di risparmio misurati sul campo."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Internet delle cose e tecnologie di rilevamento avanzato"
+  ],
+  "ris3": [
+   "Green economy – Economia circolare",
+   "Costruzione ed edilizia: ambiente edificato sostenibile e circolarità degli edifici",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai sensori validati in laboratorio al monitoraggio continuo degli edifici reali",
+  "del": "Prototipo di sistema di monitoraggio delle risorse con cruscotto di indicatori",
+  "sfr": "Servizio per gestori di edifici, utility e imprese con obiettivi di sostenibilità",
+  "parts": [
+   [
+    "humanativa",
+    "Capofila · piattaforma di monitoraggio e analisi",
+    374
+   ],
+   [
+    "philmark",
+    "Coinvolgimento degli utenti",
+    60
+   ],
+   [
+    "sapienza",
+    "Indicatori e modelli di circolarità",
+    130
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    36
+   ]
+  ]
+ },
+ {
+  "n": 8,
+  "title": "Edge AI Vision",
+  "sub": "Videoanalisi su dispositivi edge, con privacy by design, per sicurezza e gestione dei flussi",
+  "budget": 900,
+  "green": false,
+  "riserva": true,
+  "tag": "Digitale · Sicurezza",
+  "desc": [
+   "Il progetto sviluppa algoritmi di visione artificiale eseguiti sulle telecamere o su piccoli dispositivi edge. Le immagini non escono dal dispositivo: vengono trasmessi solo eventi e indicatori anonimi, come affollamento, intrusioni e situazioni di rischio.",
+   "La soluzione è sperimentata su aree comuni, varchi e parcheggi del Tiburtino, in condizioni operative reali."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Visione artificiale, edge computing, tecnologie per la tutela della vita privata"
+  ],
+  "ris3": [
+   "Sicurezza",
+   "Tecnologie e soluzioni per la sicurezza urbana",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai modelli addestrati in laboratorio ai dispositivi edge operativi nel polo",
+  "del": "Prototipo di sistema di videoanalisi edge con console di gestione degli eventi",
+  "sfr": "Soluzione per siti produttivi, spazi pubblici, eventi e infrastrutture",
+  "parts": [
+   [
+    "mainproject",
+    "Capofila · piattaforma, AI e sicurezza dei dati",
+    360
+   ],
+   [
+    "olympos",
+    "Integrazione edge e servizi digitali",
+    315
+   ],
+   [
+    "cnr",
+    "Visione artificiale e analisi dei flussi",
+    180
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    45
+   ]
+  ]
+ },
+ {
+  "n": 9,
+  "title": "Connettività ibrida 5G–satellite",
+  "sub": "Rete privata 5G integrata con link satellitari per servizi IoT critici e continuità operativa",
+  "budget": 1000,
+  "green": false,
+  "riserva": true,
+  "tag": "Aerospazio · Digitale",
+  "desc": [
+   "Il progetto sviluppa protocolli e componenti per integrare una rete privata 5G con la connettività satellitare, così che i servizi IoT critici del polo restino attivi anche in caso di guasto della rete terrestre.",
+   "Su questa infrastruttura vengono realizzate applicazioni machine-to-machine per le imprese ICT e aerospaziali del Tiburtino, con test in condizioni operative reali."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Connettività avanzata: 5G e connettività sicura via satellite"
+  ],
+  "ris3": [
+   "Aerospazio",
+   "Waveforms, protocolli e infrastrutture terrestri per l’integrazione 5G di reti satellitari e terrestri",
+   "Traiettoria prioritaria"
+  ],
+  "trl": "Dai protocolli validati in laboratorio al banco di prova operativo nel polo",
+  "del": "Prototipo di rete ibrida 5G–satellite con applicazioni M2M dimostrative",
+  "sfr": "Servizio di connettività resiliente per distretti industriali, infrastrutture e aree remote",
+  "parts": [
+   [
+    "dtales",
+    "Capofila · piattaforma applicativa e gestione dei dati",
+    400
+   ],
+   [
+    "digitalmews",
+    "Servizi digitali e integrazione",
+    360
+   ],
+   [
+    "sapienza",
+    "Protocolli e prestazioni di rete",
+    200
+   ],
+   [
+    "tecnopolo",
+    "Cardine · Mandatario · test in sito",
+    40
+   ]
+  ]
+ }
+];
+
+// Coach (Voce D.2): consulente di Tecnopolo, ripartito pro quota sui progetti in base al budget
+const COACH = {day:420, dpw:3, weeks:78};
+const COACH_EUR = COACH.day * COACH.dpw * COACH.weeks;
+const COACH_TOT = COACH_EUR * 1.2 / 1000;
+const COACH_FREE = [6];
+const BASE = P.filter(p => !COACH_FREE.includes(p.n)).reduce((a, p) => a + p.budget, 0);
+P.forEach(p => { const free = COACH_FREE.includes(p.n); const c = free ? 0 : COACH_TOT * p.budget / BASE; p.parts.push(['tecnopolo', free ? 'Coach dell’Insieme a costo zero (parte correlata di NOREMA)' : 'Coach dell’Insieme (Voce D, quota del progetto)', c]); p.budget = p.budget + c; });
+
+// calcoli
+P.forEach(p => {
+  p.rows = p.parts.map(([id, role, sp]) => { const e = ENT[id]; const i = INT[e.type]; return {id, e, role, sp, i, c: Math.round(sp * i)}; });
+  p.contrib = p.rows.reduce((a, r) => a + r.c, 0);
+  p.pmi = p.rows.filter(r => r.e.kind === 'imp').reduce((a, r) => a + r.sp, 0);
+  p.tp = p.rows.filter(r => r.e.kind === 'cardine').reduce((a, r) => a + r.sp, 0);
+  p.odr = p.rows.filter(r => r.e.kind === 'odr').reduce((a, r) => a + r.sp, 0);
+  p.hasOdr = p.odr > 0;
+});
+const TOT = P.reduce((a, p) => ({sp: a.sp + p.budget, c: a.c + p.contrib, pmi: a.pmi + p.pmi, tp: a.tp + p.tp, odr: a.odr + p.odr}), {sp:0, c:0, pmi:0, tp:0, odr:0});
+const byEnt = {};
+P.forEach(p => p.rows.forEach(r => { (byEnt[r.id] ||= {sp:0, c:0, ps:[]}); byEnt[r.id].sp += r.sp; byEnt[r.id].c += r.c; if (!byEnt[r.id].ps.includes(p.n)) byEnt[r.id].ps.push(p.n); }));
+
+const fmt = n => Math.round(n).toLocaleString('it-IT');
+const meur = k => (k / 1000).toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' M€';
+const pct = (a, b) => Math.round(a / b * 100);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pctOf = (r, p) => Math.round(r.sp / p.budget * 100);
+const companies = Object.keys(ENT).filter(k => ENT[k].kind === 'imp');
+const nImp = companies.filter(k => byEnt[k]).length;
+
+function bars(p){ return `<div class="mini" aria-hidden="true"><i style="width:${p.pmi/p.budget*100}%;background:var(--pmi)"></i><i style="width:${p.tp/p.budget*100}%;background:var(--tp)"></i><i style="width:${p.odr/p.budget*100}%;background:var(--odr)"></i></div>`; }
+function badges(p){ return (p.riserva ? '<span class="chip blue">Riserva Aerospazio e Sicurezza</span>' : '') + (p.green ? '<span class="chip warm">Premialità ambientale</span>' : ''); }
+
+function viewInsieme(){
+  const cards = P.map(p => `
+    <a class="pcard" href="#p${p.n}">
+      <div class="top"><span class="pn">P${p.n}</span><span class="chip">${esc(p.tag)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      <div class="d">${esc(p.sub)}</div>
+      <div class="money"><b>${meur(p.budget)}</b><span>contributo <strong class="num">${fmt(p.contrib)} k€</strong></span></div>
+      ${bars(p)}
+      <div class="who">${p.rows.map(r => `<b>${esc(r.e.name)}</b> ${pctOf(r,p)}%`).join(' · ')}</div>
+      <div class="chips">${badges(p)}</div>
+      <span class="open">Apri il progetto →</span>
+    </a>`).join('');
+  return `
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Avviso Filiere Tecnologiche · PR FESR Lazio 2021–2027</div>
+      <h1>Infrastrutture produttive intelligenti</h1>
+      <p class="lead">IoT, sensoristica, AI, GIS e connettività avanzata per gestire spazi, energia, sicurezza e rischio negli insediamenti produttivi del Lazio. Living lab: Tecnopolo Tiburtino.</p>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip dark">Soggetto Cardine: Tecnopolo S.p.A. · Grande impresa</span>
+        <span class="chip">Coach · Mandatario unico</span>
+        <span class="chip teal">Coordinatore del R.O.M.E. Digital Hub</span>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi ink"><div class="k-l">Spese ammissibili</div><div class="k-v">${meur(TOT.sp)}</div></div>
+      <div class="kpi"><div class="k-l">Progetti</div><div class="k-v">${P.length}</div><div class="k-s">${nImp} imprese · 2 OdR</div></div>
+      <div class="kpi teal"><div class="k-l">Contributo stimato</div><div class="k-v">≈ ${meur(TOT.c)}</div><div class="k-s">${pct(TOT.c, TOT.sp)}% medio</div></div>
+      <div class="kpi"><div class="k-l">Quota Tecnopolo, Coach incluso</div><div class="k-v num">${fmt(TOT.tp)} k€</div><div class="k-s">${(TOT.tp/TOT.sp*100).toLocaleString('it-IT',{maximumFractionDigits:1})}% delle spese</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Ripartizione delle spese</h2></div>
+    <div class="split" role="img" aria-label="PMI ${fmt(TOT.pmi)} mila euro, Tecnopolo ${fmt(TOT.tp)} mila euro, Organismi di Ricerca ${fmt(TOT.odr)} mila euro">
+      <div class="s-pmi" style="width:${TOT.pmi/TOT.sp*100}%">PMI ${fmt(TOT.pmi)} k€ · ${pct(TOT.pmi,TOT.sp)}%</div>
+      <div class="s-tp" style="width:${TOT.tp/TOT.sp*100}%">${fmt(TOT.tp)}</div>
+      <div class="s-odr" style="width:${TOT.odr/TOT.sp*100}%">OdR ${fmt(TOT.odr)}</div>
+    </div>
+    <div class="legend"><span><i style="background:var(--pmi)"></i>PMI e startup (60%)</span><span><i style="background:var(--tp)"></i>Tecnopolo (40%)</span><span><i style="background:var(--odr)"></i>Organismi di Ricerca (80%)</span></div>
+  </section>
+
+
+  <section>
+    <div class="sec-h"><h2>Il tema e gli ambiti dell’Avviso</h2></div>
+    <div class="grid4">
+      <div class="box"><h3 style="color:var(--accent)">STEP · Digitale</h3><p>IoT, AI, edge computing, digital twin, cybersecurity, connettività 5G e satellitare.</p></div>
+      <div class="box"><h3 style="color:var(--warm)">STEP · Clean tech</h3><p>Efficienza energetica e gestione delle risorse. Quattro progetti concorrono alla premialità ambientale.</p></div>
+      <div class="box"><h3 style="color:var(--blue)">AdS RIS3 Lazio</h3><p>Green economy, Sicurezza e Aerospazio: 8 traiettorie prioritarie e 1 di interesse elevato.</p></div>
+      <div class="box inv"><h3>Living lab: Tiburtino</h3><p>Polo di ICT, aerospazio e TLC: l’ambiente operativo per portare i prototipi da TRL 4 a TRL 7.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>${P.length} progetti</h2><div class="legend" style="margin:0"><span><i style="background:var(--pmi)"></i>PMI</span><span><i style="background:var(--tp)"></i>Tecnopolo</span><span><i style="background:var(--odr)"></i>OdR</span></div></div>
+    <div class="grid3">${cards}</div>
+  </section>
+
+  <section>
+    <div class="grid3" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
+      <div class="box">
+        <h3 style="color:var(--accent)">Vincoli dell’Avviso rispettati</h3>
+        <ul class="checks">
+          <li>Almeno 4 progetti idonei e 5 M€ di spese</li>
+          <li>Ogni progetto almeno 400 k€ (tipologia B)</li>
+          <li>PMI almeno al 30% di ogni progetto</li>
+          <li>Cardine + OdR entro il 30% di ogni progetto</li>
+          <li>Al massimo 3 beneficiari oltre al Cardine</li>
+          <li>Collaborazione effettiva: OdR almeno al 10%, oppure nessuna impresa oltre il 70%</li>
+          <li>Contributo sotto 3 M€ per progetto</li>
+          <li>Durata 18 mesi, SAL entro il 10° mese</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3 style="color:var(--warm)">Punti aperti</h3>
+        <ol class="issues">
+          <li>Premio della fideiussione da aggiungere al budget (il Coach è già incluso)</li>
+          <li>Ammissibilità di Tecnopolo con ruolo tecnico: quesito a Lazio Innova</li>
+          <li>Coach a costo zero su P6: confermare con il quesito e dichiarare nel Modello 5</li>
+          <li>Ruoli e dimensione delle imprese da confermare</li>
+          <li>Manifestazione di interesse entro il 5 novembre 2026</li>
+        </ol>
+      </div>
+    </div>
+  </section>`;
+}
+
+function viewProject(n){
+  const p = P[n - 1];
+  const prev = P[n - 2], next = P[n];
+  const rows = p.rows.map(r => `
+    <tr>
+      <td class="ename"><a href="#anagrafica" data-ent="${r.id}">${esc(r.e.name)}</a><span class="etype">${esc(r.e.type)}${r.e.tbc ? ' · ruolo da confermare' : ''}</span></td>
+      <td>${esc(r.role)}</td>
+      <td class="r">${pctOf(r,p)}%</td>
+      <td class="r">${fmt(r.sp)}</td>
+      <td class="r">${Math.round(r.i*100)}%</td>
+      <td class="r">${fmt(r.c)}</td>
+    </tr>`).join('');
+  const collab = p.hasOdr ? `Collaborazione effettiva garantita dall’Organismo di Ricerca (${pct(p.odr,p.budget)}% delle spese).` : `Collaborazione effettiva tra tre imprese, nessuna oltre il 70% delle spese.`;
+  return `
+  <a class="back" href="#insieme">← Torna all’Insieme</a>
+  <div class="phead">
+    <div class="big">P${p.n}</div>
+    <div><h1>${esc(p.title)}</h1><p>${esc(p.sub)}</p></div>
+  </div>
+
+  <section>
+    <div class="two">
+      <div class="prose">
+        <div class="sec-h"><h2>Il progetto</h2></div>
+        ${p.desc.map(t => `<p>${esc(t)}</p>`).join('')}
+        <div class="chips" style="margin-top:8px">${badges(p)}<span class="chip">Living lab: Tecnopolo Tiburtino</span></div>
+      </div>
+      <div class="box amb">
+        <h3 style="color:var(--accent)">Ambito</h3>
+        <dl>
+          <div><dt>STEP · ${esc(p.step[0])}</dt><dd>${esc(p.step[1])}</dd></div>
+          <div><dt>RIS3 · ${esc(p.ris3[0])}</dt><dd>${esc(p.ris3[1])}</dd><div class="lvl">${esc(p.ris3[2])}</div></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Obiettivo realizzativo e risultati</h2></div>
+    <div class="grid3">
+      <div class="box"><h3 style="color:var(--accent)">Da TRL 4 a TRL 7</h3><p>${esc(p.trl)}</p></div>
+      <div class="box"><h3 style="color:var(--accent)">Deliverable</h3><p>${esc(p.del)}</p></div>
+      <div class="box"><h3 style="color:var(--accent)">Sfruttamento</h3><p>${esc(p.sfr)}</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Partenariato e budget</h2><span class="chip teal">${p.rows.length - 1} beneficiari + Tecnopolo</span></div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Soggetto</th><th>Ruolo</th><th class="r">Quota</th><th class="r">Spese k€</th><th class="r">Intensità</th><th class="r">Contributo k€</th></tr></thead>
+        <tbody>${rows}
+          <tr class="tot"><td>Totale</td><td></td><td class="r">100%</td><td class="r">${fmt(p.budget)}</td><td class="r">${pct(p.contrib,p.budget)}%</td><td class="r">${fmt(p.contrib)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">${collab} Tipologia B, durata 18 mesi. Spese comprensive del forfait del 20% e della quota del Coach. Intensità del 60% ipotizzata per tutte le PMI: per le medie imprese è il 50%.</p>
+  </section>
+
+  <nav class="pager" aria-label="Altri progetti">
+    ${prev ? `<a href="#p${prev.n}"><small>← P${prev.n}</small><b>${esc(prev.title)}</b></a>` : '<span></span>'}
+    ${next ? `<a href="#p${next.n}" style="text-align:right"><small>P${next.n} →</small><b>${esc(next.title)}</b></a>` : `<a href="#anagrafica" style="text-align:right"><small>Poi →</small><b>Anagrafica</b></a>`}
+  </nav>`;
+}
+
+let filt = 'tutti', q = '';
+function entCard(id){
+  const e = ENT[id], b = byEnt[id];
+  const plinks = b ? b.ps.map(n => `<a href="#p${n}">P${n}</a>`).join('') : '<span class="chip tbc">Non assegnata</span>';
+  const data = [];
+  if (e.sede) data.push(['Sede', esc(e.sede)]);
+  if (e.piva) data.push(['P.IVA', `<span class="num">${esc(e.piva)}</span>`]);
+  if (e.web) data.push(['Sito', esc(e.web)]);
+  if (b) data.push(['Spese', `<span class="num">${fmt(b.sp)} k€ · contributo ${fmt(b.c)} k€</span>`]);
+  const cont = [];
+  if (e.ref) cont.push(`<div>${esc(e.ref)}</div>`);
+  if (e.email) cont.push(`<div><span class="num">${esc(e.email)}</span><button type="button" class="copy" data-copy="${esc(e.email)}">Copia</button></div>`);
+  if (e.tel) cont.push(`<div class="num">${esc(e.tel)}</div>`);
+  const typeChip = e.kind === 'odr' ? 'warm' : e.kind === 'ente' ? 'blue' : e.kind === 'cardine' ? 'dark' : 'teal';
+  return `<article class="ecard" id="ent-${id}">
+    <div class="row"><h3>${esc(e.name)}</h3><span class="chip ${typeChip}">${esc(e.type)}</span></div>
+    <p class="prof">${esc(e.profile)}${e.tbc ? ' <span class="chip tbc">Profilo da confermare</span>' : ''}</p>
+    ${e.kind !== 'ente' ? `<div class="plinks">${plinks}</div>` : ''}
+    ${data.length ? `<dl>${data.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>` : ''}
+    ${e.note ? `<p class="prof">${esc(e.note)}</p>` : ''}
+    ${cont.length ? `<div class="contact">${cont.join('')}</div>` : ''}
+  </article>`;
+}
+function entList(){
+  const order = ['cardine','odr','imp','ente'];
+  return Object.keys(ENT)
+    .filter(id => filt === 'tutti' || (filt === 'imp' ? ENT[id].kind === 'imp' : filt === 'odr' ? ENT[id].kind === 'odr' : ['ente','cardine'].includes(ENT[id].kind)))
+    .filter(id => !q || (ENT[id].name + ' ' + ENT[id].profile).toLowerCase().includes(q))
+    .sort((a, b) => order.indexOf(ENT[a].kind) - order.indexOf(ENT[b].kind) || (byEnt[b]?.sp || 0) - (byEnt[a]?.sp || 0));
+}
+function viewAnagrafica(){
+  const ids = Object.keys(ENT).filter(id => byEnt[id]).sort((a,b) => {const o=['cardine','odr','imp']; return o.indexOf(ENT[a].kind)-o.indexOf(ENT[b].kind) || byEnt[b].sp-byEnt[a].sp;});
+  const mrows = ids.map(id => `<tr><td class="ename">${esc(ENT[id].name)}<span class="etype">${esc(ENT[id].type)}</span></td>${P.map(p => { const r = p.rows.find(x => x.id === id); return r ? `<td class="c on">${fmt(r.sp)}</td>` : '<td class="c"></td>'; }).join('')}<td class="r">${fmt(byEnt[id].sp)}</td></tr>`).join('');
+  return `
+  <div class="eyebrow">Anagrafica</div>
+  <h1 style="font-size:clamp(30px,4vw,44px); margin:6px 0 10px">Imprese, Organismi di Ricerca ed enti</h1>
+  <p class="lead">${nImp} imprese, 2 Organismi di Ricerca, il Soggetto Cardine e gli enti dell’Avviso. I profili segnati in giallo sono ipotesi da far confermare a ciascuna impresa.</p>
+
+  <section>
+    <div class="tools">
+      <div class="filter" role="group" aria-label="Filtra per tipo">
+        <button type="button" data-f="tutti" aria-pressed="${filt==='tutti'}">Tutti</button>
+        <button type="button" data-f="imp" aria-pressed="${filt==='imp'}">Imprese</button>
+        <button type="button" data-f="odr" aria-pressed="${filt==='odr'}">Organismi di Ricerca</button>
+        <button type="button" data-f="enti" aria-pressed="${filt==='enti'}">Cardine ed enti</button>
+      </div>
+      <div class="search"><label for="q">Cerca</label><input id="q" type="search" placeholder="Nome o competenza" value="${esc(q)}"></div>
+    </div>
+    <div class="ecards" id="ecards">${entList().map(entCard).join('')}</div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Chi fa cosa: spese per progetto (k€)</h2></div>
+    <div class="tablebox">
+      <table class="matrix">
+        <thead><tr><th>Soggetto</th>${P.map(p => `<th class="c"><a href="#p${p.n}">P${p.n}</a></th>`).join('')}<th class="r">Totale</th></tr></thead>
+        <tbody>${mrows}<tr class="tot"><td>Totale</td>${P.map(p => `<td class="c">${fmt(p.budget)}</td>`).join('')}<td class="r">${fmt(TOT.sp)}</td></tr></tbody>
+      </table>
+    </div>
+  </section>`;
+}
+
+const view = document.getElementById('view');
+const pnav = document.getElementById('pnav');
+pnav.innerHTML = P.map(p => `<a href="#p${p.n}" data-nav="p${p.n}">P${p.n}</a>`).join('');
+
+function render(){
+  const h = (location.hash || '#insieme').slice(1);
+  let html, cur = h;
+  const m = /^p([1-9])$/.exec(h);
+  if (m && P[+m[1]-1]) html = viewProject(+m[1]);
+  else if (h === 'anagrafica') html = viewAnagrafica();
+  else { html = viewInsieme(); cur = 'insieme'; }
+  view.innerHTML = html + `<footer><span>Ipotesi di lavoro sulla bozza di Avviso del 23 settembre 2026. Stime indicative.</span><span>NOREMA · ottobre 2026</span></footer>`;
+  document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === cur) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  document.title = cur === 'insieme' ? 'Filiera Infrastrutture Intelligenti' : (cur === 'anagrafica' ? 'Anagrafica · Filiera Infrastrutture Intelligenti' : `P${m[1]} ${P[+m[1]-1].title} · Filiera`);
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', render);
+
+view.addEventListener('click', e => {
+  const f = e.target.closest('[data-f]');
+  if (f){ filt = f.dataset.f; document.querySelectorAll('[data-f]').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === filt)); document.getElementById('ecards').innerHTML = entList().map(entCard).join(''); return; }
+  const c = e.target.closest('[data-copy]');
+  if (c){ const t = c.dataset.copy; const done = () => { c.textContent = 'Copiato'; setTimeout(() => c.textContent = 'Copia', 1500); };
+    try { navigator.clipboard.writeText(t).then(done, () => { selectText(c.previousElementSibling); }); } catch(_) { selectText(c.previousElementSibling); } return; }
+  const en = e.target.closest('[data-ent]');
+  if (en){ e.preventDefault(); const id = en.dataset.ent; filt = 'tutti'; q = ''; location.hash = 'anagrafica'; setTimeout(() => { const el = document.getElementById('ent-' + id); if (el){ el.scrollIntoView({block:'center'}); el.style.outline = '2px solid var(--accent)'; } }, 30); }
+});
+view.addEventListener('input', e => { if (e.target.id === 'q'){ q = e.target.value.trim().toLowerCase(); document.getElementById('ecards').innerHTML = entList().map(entCard).join(''); } });
+function selectText(el){ if (!el) return; const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+render();
+</script>
+</body>
+</html>
