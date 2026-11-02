@@ -16,7 +16,7 @@
   --blue:#111111; --blue-soft:#ECEBE7;
   --navy:#111111; --on-navy:#FFFFFF; --navy-muted:#C9C6BF;
   --tbc:#7A5600; --tbc-soft:#FFF1C7;
-  --pmi:#111111; --tp:#FF2700; --odr:#FFBB00;
+  --pmi:#111111; --gi:#8C877D; --tp:#FF2700; --odr:#FFBB00;
   --tp-red:#FF2700; --tp-yellow:#FFBB00;
   --f-display:'Inter Tight', 'Archivo', system-ui, sans-serif;
   --f-body:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -28,7 +28,7 @@
   --blue:#F2F0EC; --blue-soft:#2A2825;
   --navy:#000000; --on-navy:#FFFFFF; --navy-muted:#B3AEA5;
   --tbc:#FFCB45; --tbc-soft:#33280C;
-  --pmi:#E9E6E0; --tp:#FF4A26; --odr:#FFBB00;
+  --pmi:#E9E6E0; --gi:#8C877D; --tp:#FF4A26; --odr:#FFBB00;
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
@@ -38,7 +38,7 @@
   --blue:#F2F0EC; --blue-soft:#2A2825;
   --navy:#000000; --on-navy:#FFFFFF; --navy-muted:#B3AEA5;
   --tbc:#FFCB45; --tbc-soft:#33280C;
-  --pmi:#E9E6E0; --tp:#FF4A26; --odr:#FFBB00;
+  --pmi:#E9E6E0; --gi:#8C877D; --tp:#FF4A26; --odr:#FFBB00;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -92,6 +92,7 @@ section+section{margin-top:36px}
 .split{height:26px; display:flex; border-radius:5px; overflow:hidden; font-size:12px; font-weight:600}
 .split div{display:flex; align-items:center; padding-inline:8px; white-space:nowrap; overflow:hidden}
 .s-pmi{background:var(--pmi); color:var(--bg)}
+.s-gi{background:var(--gi); color:#FFFFFF}
 .s-tp{background:var(--tp); color:var(--on-accent); justify-content:center}
 .s-odr{background:var(--odr); color:var(--bg); justify-content:center}
 .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); margin-top:8px}
@@ -391,11 +392,11 @@ const ENT = {
   "profile": "Piattaforme applicative e gestione dei dati.",
   "tbc": true
  },
- "digitalmews": {
-  "name": "DIGITAL MEWS",
-  "type": "PMI",
+ "ericsson": {
+  "name": "ERICSSON",
+  "type": "Grande impresa",
   "kind": "imp",
-  "profile": "Servizi digitali e integrazione applicativa.",
+  "profile": "Grande impresa ICT: reti mobili 5G e soluzioni di connettività private.",
   "tbc": true
  },
  "lazioinnova": {
@@ -800,7 +801,7 @@ const P = [
   "n": 9,
   "title": "Connettività ibrida 5G–satellite",
   "sub": "Rete privata 5G integrata con link satellitari per servizi IoT critici e continuità operativa",
-  "budget": 1000,
+  "budget": 940,
   "green": false,
   "riserva": true,
   "tag": "Aerospazio · Digitale",
@@ -822,19 +823,19 @@ const P = [
   "sfr": "Servizio di connettività resiliente per distretti industriali, infrastrutture e aree remote",
   "parts": [
    [
-    "dtales",
-    "Capofila · piattaforma applicativa e gestione dei dati",
-    400
+    "ericsson",
+    "Capofila · rete privata 5G e integrazione con il segmento satellitare",
+    420
    ],
    [
-    "digitalmews",
-    "Servizi digitali e integrazione",
-    360
+    "dtales",
+    "Piattaforma applicativa e gestione dei dati",
+    380
    ],
    [
     "sapienza",
     "Protocolli e prestazioni di rete",
-    200
+    100
    ],
    [
     "tecnopolo",
@@ -857,12 +858,13 @@ P.forEach(p => { const free = COACH_FREE.includes(p.n); const c = free ? 0 : COA
 P.forEach(p => {
   p.rows = p.parts.map(([id, role, sp]) => { const e = ENT[id]; const i = INT[e.type]; return {id, e, role, sp, i, c: Math.round(sp * i)}; });
   p.contrib = p.rows.reduce((a, r) => a + r.c, 0);
-  p.pmi = p.rows.filter(r => r.e.kind === 'imp').reduce((a, r) => a + r.sp, 0);
+  p.pmi = p.rows.filter(r => r.e.kind === 'imp' && r.e.type !== 'Grande impresa').reduce((a, r) => a + r.sp, 0);
+  p.gi = p.rows.filter(r => r.e.kind === 'imp' && r.e.type === 'Grande impresa').reduce((a, r) => a + r.sp, 0);
   p.tp = p.rows.filter(r => r.e.kind === 'cardine').reduce((a, r) => a + r.sp, 0);
   p.odr = p.rows.filter(r => r.e.kind === 'odr').reduce((a, r) => a + r.sp, 0);
   p.hasOdr = p.odr > 0;
 });
-const TOT = P.reduce((a, p) => ({sp: a.sp + p.budget, c: a.c + p.contrib, pmi: a.pmi + p.pmi, tp: a.tp + p.tp, odr: a.odr + p.odr}), {sp:0, c:0, pmi:0, tp:0, odr:0});
+const TOT = P.reduce((a, p) => ({sp: a.sp + p.budget, c: a.c + p.contrib, pmi: a.pmi + p.pmi, gi: a.gi + p.gi, tp: a.tp + p.tp, odr: a.odr + p.odr}), {sp:0, c:0, pmi:0, gi:0, tp:0, odr:0});
 const byEnt = {};
 P.forEach(p => p.rows.forEach(r => { (byEnt[r.id] ||= {sp:0, c:0, ps:[]}); byEnt[r.id].sp += r.sp; byEnt[r.id].c += r.c; if (!byEnt[r.id].ps.includes(p.n)) byEnt[r.id].ps.push(p.n); }));
 
@@ -874,7 +876,7 @@ const pctOf = (r, p) => Math.round(r.sp / p.budget * 100);
 const companies = Object.keys(ENT).filter(k => ENT[k].kind === 'imp');
 const nImp = companies.filter(k => byEnt[k]).length;
 
-function bars(p){ return `<div class="mini" aria-hidden="true"><i style="width:${p.pmi/p.budget*100}%;background:var(--pmi)"></i><i style="width:${p.tp/p.budget*100}%;background:var(--tp)"></i><i style="width:${p.odr/p.budget*100}%;background:var(--odr)"></i></div>`; }
+function bars(p){ return `<div class="mini" aria-hidden="true"><i style="width:${p.pmi/p.budget*100}%;background:var(--pmi)"></i><i style="width:${p.gi/p.budget*100}%;background:var(--gi)"></i><i style="width:${p.tp/p.budget*100}%;background:var(--tp)"></i><i style="width:${p.odr/p.budget*100}%;background:var(--odr)"></i></div>`; }
 function badges(p){ return (p.riserva ? '<span class="chip blue">Riserva Aerospazio e Sicurezza</span>' : '') + (p.green ? '<span class="chip warm">Premialità ambientale</span>' : ''); }
 
 function viewInsieme(){
@@ -911,12 +913,13 @@ function viewInsieme(){
 
   <section>
     <div class="sec-h"><h2>Ripartizione delle spese</h2></div>
-    <div class="split" role="img" aria-label="PMI ${fmt(TOT.pmi)} mila euro, Tecnopolo ${fmt(TOT.tp)} mila euro, Organismi di Ricerca ${fmt(TOT.odr)} mila euro">
+    <div class="split" role="img" aria-label="PMI ${fmt(TOT.pmi)} mila euro, altre grandi imprese ${fmt(TOT.gi)} mila euro, Tecnopolo ${fmt(TOT.tp)} mila euro, Organismi di Ricerca ${fmt(TOT.odr)} mila euro">
       <div class="s-pmi" style="width:${TOT.pmi/TOT.sp*100}%">PMI ${fmt(TOT.pmi)} k€ · ${pct(TOT.pmi,TOT.sp)}%</div>
+      ${TOT.gi ? `<div class="s-gi" style="width:${TOT.gi/TOT.sp*100}%">GI ${fmt(TOT.gi)}</div>` : ''}
       <div class="s-tp" style="width:${TOT.tp/TOT.sp*100}%">${fmt(TOT.tp)}</div>
       <div class="s-odr" style="width:${TOT.odr/TOT.sp*100}%">OdR ${fmt(TOT.odr)}</div>
     </div>
-    <div class="legend"><span><i style="background:var(--pmi)"></i>PMI e startup (60%)</span><span><i style="background:var(--tp)"></i>Tecnopolo (40%)</span><span><i style="background:var(--odr)"></i>Organismi di Ricerca (80%)</span></div>
+    <div class="legend"><span><i style="background:var(--pmi)"></i>PMI e startup (60%)</span><span><i style="background:var(--gi)"></i>Altre grandi imprese (40%)</span><span><i style="background:var(--tp)"></i>Tecnopolo (40%)</span><span><i style="background:var(--odr)"></i>Organismi di Ricerca (80%)</span></div>
   </section>
 
 
@@ -931,7 +934,7 @@ function viewInsieme(){
   </section>
 
   <section>
-    <div class="sec-h"><h2>${P.length} progetti</h2><div class="legend" style="margin:0"><span><i style="background:var(--pmi)"></i>PMI</span><span><i style="background:var(--tp)"></i>Tecnopolo</span><span><i style="background:var(--odr)"></i>OdR</span></div></div>
+    <div class="sec-h"><h2>${P.length} progetti</h2><div class="legend" style="margin:0"><span><i style="background:var(--pmi)"></i>PMI</span><span><i style="background:var(--gi)"></i>GI</span><span><i style="background:var(--tp)"></i>Tecnopolo</span><span><i style="background:var(--odr)"></i>OdR</span></div></div>
     <div class="grid3">${cards}</div>
   </section>
 
