@@ -1,4 +1,4 @@
-name: Pubblica su filiere.norema.eu
+name: Pubblica su filiere.norema.eu e filieraluiss.norema.eu
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   deploy:
+    name: filiere.norema.eu (Tecnopolo)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,3 +24,27 @@ jobs:
             **/.git*
             **/.git*/**
             README.md
+            luiss/**
+
+  deploy-luiss:
+    name: filieraluiss.norema.eu (LUISS)
+    runs-on: ubuntu-latest
+    env:
+      LUISS_DIR: ${{ secrets.FTP_DIR_LUISS }}
+    steps:
+      - name: Segreto FTP_DIR_LUISS mancante
+        if: env.LUISS_DIR == ''
+        run: echo "::warning::FTP_DIR_LUISS non impostato. La pagina LUISS non viene pubblicata finché il segreto non c'è."
+      - uses: actions/checkout@v4
+        if: env.LUISS_DIR != ''
+      - name: Carica via FTP la cartella luiss/
+        if: env.LUISS_DIR != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER_LUISS || secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME_LUISS || secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD_LUISS || secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./luiss/
+          server-dir: ${{ secrets.FTP_DIR_LUISS }}

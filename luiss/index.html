@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Filiera AgriTech LUISS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600&display=swap">
+<style>
+/* Layout: barra di navigazione fissa + tre viste a hash (#insieme, #p1–#p9, #anagrafica), griglie che si riducono a una colonna su telefono */
+:root{
+  --bg:#F5F7F9; --surface:#FFFFFF; --ink:#0F1A2A; --muted:#4A5568; --line:#DCE2E8; --soft:#EEF1F4;
+  --accent:#00706E; --accent-soft:#DDF5F4; --on-accent:#FFFFFF;
+  --warm:#8A5A00; --warm-soft:#FFF3D1;
+  --blue:#002A5C; --blue-soft:#E3EAF3;
+  --navy:#002A5C; --on-navy:#FFFFFF; --navy-muted:#BFD0E3;
+  --tbc:#7A5600; --tbc-soft:#FFF1C7;
+  --pmi:#0BB9B7; --gi:#AFC2D8; --tp:#002A5C; --odr:#5B7FA8;
+  --f-display:'Inter Tight', 'Archivo', system-ui, sans-serif;
+  --f-body:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0D1520; --surface:#16202D; --ink:#EEF2F6; --muted:#A9B4C2; --line:#2A3646; --soft:#1F2A38;
+  --accent:#3FD6D3; --accent-soft:#0F3433; --on-accent:#0D1520;
+  --warm:#FFCB45; --warm-soft:#33280C;
+  --blue:#9EC1EA; --blue-soft:#1C2B40;
+  --navy:#001A3A; --on-navy:#FFFFFF; --navy-muted:#A9B4C2;
+  --tbc:#FFCB45; --tbc-soft:#33280C;
+  --pmi:#0BB9B7; --gi:#7F93AB; --tp:#6E9BD6; --odr:#8FA9C9;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0D1520; --surface:#16202D; --ink:#EEF2F6; --muted:#A9B4C2; --line:#2A3646; --soft:#1F2A38;
+  --accent:#3FD6D3; --accent-soft:#0F3433; --on-accent:#0D1520;
+  --warm:#FFCB45; --warm-soft:#33280C;
+  --blue:#9EC1EA; --blue-soft:#1C2B40;
+  --navy:#001A3A; --on-navy:#FFFFFF; --navy-muted:#A9B4C2;
+  --tbc:#FFCB45; --tbc-soft:#33280C;
+  --pmi:#0BB9B7; --gi:#7F93AB; --tp:#6E9BD6; --odr:#8FA9C9;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--navy)}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px}
+h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0; letter-spacing:-0.01em}
+.wrap{max-width:1180px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
+.num{font-variant-numeric:tabular-nums}
+
+/* barra */
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--navy); color:var(--on-navy)}
+.bar .wrap{display:flex; align-items:center; gap:16px; padding-block:10px; flex-wrap:wrap}
+.brand{font-family:var(--f-display); font-weight:800; font-size:15px; letter-spacing:0.01em; color:var(--on-navy); text-decoration:none; margin-right:auto}
+.brand span{color:var(--navy-muted); font-weight:600}
+.nav{display:flex; gap:4px; flex-wrap:wrap}
+.nav a{color:var(--navy-muted); text-decoration:none; font-weight:600; font-size:14px; padding:8px 12px; border-radius:6px; min-height:40px; display:inline-flex; align-items:center}
+.nav a:hover{color:var(--on-navy); background:rgba(255,255,255,0.08)}
+.nav a[aria-current="page"]{color:var(--on-navy); background:rgba(255,255,255,0.14)}
+.pnav{display:flex; gap:4px; flex-wrap:wrap}
+.pnav a{font-size:13px; padding:6px 9px; min-height:34px}
+
+main{padding-block:28px 56px}
+.eyebrow{font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent)}
+.lead{font-size:17px; color:var(--muted); max-width:62ch; margin:0}
+section+section{margin-top:36px}
+.sec-h{display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.sec-h h2{font-size:22px}
+.chips{display:flex; gap:8px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; padding:5px 11px; border-radius:999px; background:var(--soft); color:var(--ink); white-space:nowrap}
+.chip.dark{background:var(--navy); color:var(--on-navy)}
+.chip.teal{background:var(--accent-soft); color:var(--accent)}
+.chip.warm{background:var(--warm-soft); color:var(--warm)}
+.chip.blue{background:var(--blue-soft); color:var(--blue)}
+.chip.tbc{background:var(--tbc-soft); color:var(--tbc)}
+
+/* hero insieme */
+.hero{display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:28px; align-items:end}
+.hero h1{font-size:clamp(34px, 5vw, 56px); line-height:1.02; font-weight:800; margin:8px 0 12px}
+.kpis{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px}
+.kpi{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+.kpi.ink{background:var(--navy); border-color:var(--navy); color:var(--on-navy)}
+.kpi.ink .k-l{color:var(--navy-muted)}
+.kpi.teal{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.kpi.teal .k-l{color:var(--on-accent); opacity:0.85}
+.k-l{font-size:12.5px; color:var(--muted)}
+.k-v{font-family:var(--f-display); font-weight:800; font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums}
+.k-s{font-size:12.5px}
+
+.split{height:26px; display:flex; border-radius:5px; overflow:hidden; font-size:12px; font-weight:600}
+.split div{display:flex; align-items:center; padding-inline:8px; white-space:nowrap; overflow:hidden}
+.s-pmi{background:var(--pmi); color:#002A5C}
+.s-gi{background:var(--gi); color:#002A5C}
+.s-tp{background:var(--tp); color:#FFFFFF; justify-content:center}
+.s-odr{background:var(--odr); color:#FFFFFF; justify-content:center}
+.legend{display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); margin-top:8px}
+.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:5px; vertical-align:-1px}
+
+.grid4{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px}
+.box{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px}
+.box h3{font-size:13px; text-transform:uppercase; letter-spacing:0.06em; font-family:var(--f-body); font-weight:600; margin-bottom:6px}
+.box p{margin:0; font-size:14px}
+.box.inv{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.box.inv h3{color:var(--accent)}
+
+/* card progetto */
+.pcard{display:flex; flex-direction:column; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; text-decoration:none; color:var(--ink); transition:border-color .15s, transform .15s; min-width:0}
+.pcard:hover{border-color:var(--accent); transform:translateY(-2px)}
+.pcard .top{display:flex; justify-content:space-between; align-items:center; gap:8px}
+.pcard .pn{font-family:var(--f-display); font-weight:800; font-size:15px; color:var(--accent)}
+.pcard h3{font-size:20px; line-height:1.15}
+.pcard .d{font-size:13.5px; color:var(--muted); flex:1 1 auto}
+.pcard .money{display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.pcard .money b{font-family:var(--f-display); font-size:22px; font-variant-numeric:tabular-nums}
+.pcard .money span{font-size:13px; color:var(--muted)}
+.mini{height:7px; display:flex; border-radius:3px; overflow:hidden; background:var(--soft)}
+.mini i{display:block; height:100%}
+.who{font-size:12.5px; color:var(--muted); line-height:1.4}
+.who b{color:var(--ink); font-weight:600}
+.open{font-size:13px; font-weight:600; color:var(--accent)}
+
+.checks{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px 24px; font-size:14px; margin:0; padding:0; list-style:none}
+.checks li{display:flex; gap:8px}
+.checks li::before{content:"✓"; color:var(--accent); font-weight:700}
+.issues{margin:0; padding-left:20px; font-size:14px; display:grid; gap:6px}
+
+/* pagina progetto */
+.back{display:inline-flex; align-items:center; gap:6px; font-weight:600; text-decoration:none; font-size:14px; min-height:40px}
+.phead{background:var(--navy); color:var(--on-navy); border-radius:12px; padding:24px; display:flex; gap:22px; align-items:center; margin-top:8px}
+.phead .big{font-family:var(--f-display); font-weight:800; font-size:64px; line-height:1; color:var(--accent)}
+.phead h1{font-size:clamp(26px, 4vw, 40px); line-height:1.05}
+.phead p{margin:6px 0 0; color:var(--navy-muted); font-size:16px; max-width:60ch}
+.two{display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:18px; align-items:start}
+.prose p{margin:0 0 10px; max-width:66ch}
+.amb dl{margin:0; display:grid; gap:12px}
+.amb dt{font-size:12.5px; color:var(--muted)}
+.amb dd{margin:2px 0 0; font-weight:600}
+.lvl{font-size:12.5px; font-weight:600; color:var(--accent)}
+.tablebox{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:640px}
+th,td{padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th{background:var(--soft); font-size:12.5px; font-weight:600; color:var(--muted)}
+td.r,th.r{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.tot td{font-weight:700; border-bottom:none}
+.ename{font-weight:600}
+.ename a{color:var(--ink); text-decoration:none; border-bottom:1px dotted var(--muted)}
+.ename a:hover{color:var(--accent)}
+.etype{display:block; font-size:12px; color:var(--muted); font-weight:400}
+.pager{display:flex; justify-content:space-between; gap:12px; margin-top:28px; flex-wrap:wrap}
+.pager a{display:inline-flex; flex-direction:column; text-decoration:none; padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); min-width:0; max-width:48%}
+.pager a small{color:var(--muted)}
+.pager a b{font-family:var(--f-display)}
+
+/* anagrafica */
+.tools{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.filter{display:flex; gap:6px; flex-wrap:wrap}
+.filter button{font:inherit; font-size:13.5px; font-weight:600; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:7px 14px; min-height:40px; cursor:pointer}
+.filter button[aria-pressed="true"]{background:var(--navy); color:var(--on-navy); border-color:var(--navy)}
+.search{display:flex; flex-direction:column; gap:2px}
+.search label{font-size:12px; color:var(--muted)}
+.search input{font:inherit; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--ink); min-height:40px; width:min(280px, 100%)}
+.ecards{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin-top:16px}
+.ecard{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.ecard h3{font-size:18px}
+.ecard .row{display:flex; justify-content:space-between; gap:8px; align-items:flex-start}
+.ecard .prof{font-size:13.5px; color:var(--muted); margin:0}
+.ecard dl{margin:0; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px; font-size:13.5px}
+.ecard dt{color:var(--muted)}
+.ecard dd{margin:0; overflow-wrap:anywhere}
+.plinks{display:flex; gap:6px; flex-wrap:wrap}
+.plinks a{font-size:12.5px; font-weight:600; text-decoration:none; padding:3px 9px; border-radius:6px; background:var(--accent-soft); color:var(--accent)}
+.contact{border-top:1px solid var(--line); padding-top:10px; font-size:13.5px}
+.contact .missing{color:var(--tbc); font-weight:600}
+.copy{font:inherit; font-size:12px; font-weight:600; border:1px solid var(--line); background:transparent; color:var(--accent); border-radius:6px; padding:2px 8px; margin-left:6px; cursor:pointer}
+.matrix td.c{text-align:center; font-variant-numeric:tabular-nums; white-space:nowrap}
+.matrix td.c.on{background:var(--accent-soft); color:var(--ink); font-weight:600}
+.matrix th.c{text-align:center}
+.matrix td:first-child{white-space:nowrap}
+.note{font-size:13px; color:var(--muted); margin-top:10px; max-width:80ch}
+footer{border-top:1px solid var(--line); margin-top:40px; padding-top:14px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+@media (max-width:960px){
+  .grid4{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .grid3,.ecards{grid-template-columns:repeat(2, minmax(0,1fr))}
+  .hero,.two{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:620px){
+  .grid4,.grid3,.ecards,.checks{grid-template-columns:minmax(0,1fr)}
+  .phead{flex-direction:column; align-items:flex-start; gap:8px}
+  .phead .big{font-size:44px}
+  .pager a{max-width:100%}
+  .brand{width:100%}
+}
+@media (prefers-reduced-motion:reduce){ .pcard{transition:none} .pcard:hover{transform:none} }
+/* barra LUISS: blu con filetto teal */
+.bar{border-bottom:4px solid #0BB9B7}
+.brand{display:inline-flex; align-items:center; gap:14px}
+.brand .mk{font-family:var(--f-display); font-weight:800; font-size:22px; letter-spacing:0.02em; color:#FFFFFF}
+.brand .bt{color:#FFFFFF; font-weight:700; display:flex; flex-direction:column; line-height:1.15; padding-left:14px; border-left:1px solid rgba(255,255,255,0.3)}
+.brand .bt span{color:var(--navy-muted); font-weight:500; font-size:13px}
+.bar .nav a[aria-current="page"]{color:#002A5C; background:#0BB9B7}
+.box.inv h3{color:#0BB9B7}
+@media (max-width:620px){ .brand .bt{display:none} }
+/* credito NOREMA */
+.credit{display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--muted)}
+.credit>span{font-size:10.5px; letter-spacing:.16em; text-transform:uppercase}
+.credit .nm{display:inline-flex; color:var(--norema); line-height:0; padding:2px 0}
+.credit .nm svg{height:28px; width:auto}
+.credit .nm:hover{opacity:.8}
+:root{--norema:#002A5C; --norema-accent:#0BB9B7}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--norema:#E7EAE9; --norema-accent:#0BB9B7} }
+:root[data-theme="dark"]{--norema:#E7EAE9; --norema-accent:#0BB9B7}
+footer{align-items:center}
+footer>span{flex:1 1 0}
+footer>span:last-child{text-align:right}
+@media (max-width:620px){ footer{flex-direction:column; align-items:center; text-align:center} footer>span:last-child{text-align:center} }
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#insieme"><span class="mk">LUISS</span><span class="bt">AgriTech &amp; AgriFood Resilience<span>Filiere Tecnologiche · PR FESR Lazio</span></span></a>
+    <nav class="nav" aria-label="Sezioni">
+      <a href="#insieme" data-nav="insieme">Insieme</a>
+      <span class="pnav" id="pnav"></span>
+      <a href="#anagrafica" data-nav="anagrafica">Anagrafica</a>
+    </nav>
+  </div>
+</header>
+
+</head>
+<body>
+<main class="wrap" id="view" aria-live="polite"></main>
+
+<script>
+const ENT = {
+ "luiss": {
+  "name": "LUISS Guido Carli",
+  "type": "Organismo di Ricerca",
+  "kind": "cardine",
+  "profile": "Libera Università Internazionale degli Studi Sociali Guido Carli. Soggetto Cardine: Coach, coordinamento scientifico e co-design con produttori e filiera. Team accademico di riferimento: Dipartimento di Business and Management.",
+  "sede": "Roma – Viale Romania 32 · Via di Villa Emiliani",
+  "note": "Status di Organismo di Ricerca (art. 2 (83) RGE) da confermare. Referenti per la proposta in via di definizione."
+ },
+ "roma3": {
+  "name": "Roma Tre – Lab AI e GIS",
+  "type": "Organismo di Ricerca",
+  "kind": "odr",
+  "profile": "Laboratorio di intelligenza artificiale e sistemi informativi geografici dell’Università Roma Tre.",
+  "sede": "Roma",
+  "tbc": true
+ },
+ "torvergata": {
+  "name": "Tor Vergata – Impianti industriali",
+  "type": "Organismo di Ricerca",
+  "kind": "odr",
+  "profile": "Università di Roma Tor Vergata, gruppo del Prof. Schilardi (impianti industriali, operations e supply chain management). Guida scientifica della Strategic Supply Chain.",
+  "sede": "Roma",
+  "tbc": true
+ },
+ "cyber40": {
+  "name": "Cyber 4.0",
+  "type": "Organismo di Ricerca",
+  "kind": "odr",
+  "profile": "Competence Center nazionale per la cybersecurity.",
+  "sede": "Roma",
+  "tbc": true,
+  "note": "Riconoscimento come Organismo di Ricerca da verificare (precedente citato: Competence Center del Politecnico di Torino)."
+ },
+ "argologica": {
+  "name": "Argo Logica",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "ERP e processi gestionali per le imprese della filiera AgriFood. Gruppo Effort Cube.",
+  "note": "Dimensione da verificare a livello di gruppo: se il Gruppo Effort Cube è grande impresa, l’intensità scende al 40%."
+ },
+ "dot": {
+  "name": "Dot Beyond",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "AI agentica, Digital Twin, XR e Control Room predittive. Integrazione della piattaforma condivisa dell’Insieme. Gruppo Effort Cube.",
+  "sede": "Roma",
+  "note": "Dimensione da verificare a livello di gruppo: se il Gruppo Effort Cube è grande impresa, l’intensità scende al 40%."
+ },
+ "startupluiss": {
+  "name": "Startup LUISS (da nominare)",
+  "type": "Startup innovativa",
+  "kind": "imp",
+  "profile": "Startup dell’ecosistema LUISS attiva su AI e machine learning, in collaborazione con VAR Group. Incontro di conoscenza il 30 ottobre.",
+  "tbc": true
+ },
+ "ecoh": {
+  "name": "Ecoh Media",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Contenuti digitali e comunicazione per il consumatore.",
+  "tbc": true
+ },
+ "immersive": {
+  "name": "Immersive Store",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Esperienze immersive per punto vendita ed e-commerce.",
+  "tbc": true
+ },
+ "h4r": {
+  "name": "H4Research",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Sensoristica, robotica e droni per il monitoraggio di campo.",
+  "tbc": true
+ },
+ "spatial": {
+  "name": "Spatial Connection",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Dati geospaziali, GIS e prodotti da osservazione della Terra.",
+  "tbc": true
+ },
+ "telespazio": {
+  "name": "Telespazio / e-GEOS",
+  "type": "Grande impresa",
+  "kind": "imp",
+  "profile": "Osservazione della Terra, analisi geospaziale e modelli di vulnerabilità territoriale.",
+  "sede": "Roma",
+  "tbc": true,
+  "note": "Adesione e ruolo da negoziare."
+ },
+ "pilota": {
+  "name": "PMI pilota supply chain (da individuare)",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Impresa agroalimentare o distributiva che mette a disposizione casi reali di network design e gestione dei materiali. Deve essere indipendente dal Gruppo Effort Cube.",
+  "tbc": true
+ },
+ "oncharge": {
+  "name": "On Charge",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Infrastrutture energetiche e di ricarica. Ha già sensori nel bosco di Ferentino e un accordo con Protezione Civile e Vigili del Fuoco per il monitoraggio con sensori e videosorveglianza.",
+  "tbc": true
+ },
+ "pmicyber": {
+  "name": "PMI cyber (da individuare)",
+  "type": "PMI",
+  "kind": "imp",
+  "profile": "Impresa specializzata in sicurezza IoT/OT e delle connessioni (anche satellitari). Candidature in valutazione.",
+  "tbc": true
+ },
+ "confagri": {
+  "name": "Confagricoltura",
+  "type": "Stakeholder",
+  "kind": "ente",
+  "profile": "Associazione di rappresentanza delle imprese agricole. Stakeholder per il co-design e l’individuazione dei piloti (non beneficiario)."
+ },
+ "idrico": {
+  "name": "Gestori idrici e consorzi irrigui",
+  "type": "Stakeholder",
+  "kind": "ente",
+  "profile": "Acea, Acqualatina, APS Sabina e consorzi di bonifica: siti, dati e utilizzatori finali per AgriWater e osservazione della Terra (non beneficiari, da coinvolgere)."
+ },
+ "ferentino": {
+  "name": "Area boschiva di Ferentino",
+  "type": "Sito pilota",
+  "kind": "ente",
+  "profile": "Area dimostrativa per il monitoraggio agroforestale (P6), dove On Charge ha già installato sensori."
+ },
+ "lazioinnova": {
+  "name": "Lazio Innova S.p.A.",
+  "type": "Ente gestore",
+  "kind": "ente",
+  "profile": "Organismo intermedio che gestisce l’Avviso (istruttoria, concessione, erogazioni).",
+  "sede": "Via Marco Aurelio 26/A, Roma",
+  "email": "infobandi@lazioinnova.it",
+  "tel": "06 605160",
+  "note": "Quesiti sull’Avviso: infobandi@lazioinnova.it. PEC: incentivi@pec.lazioinnova.it"
+ },
+ "regione": {
+  "name": "Regione Lazio",
+  "type": "Autorità di gestione",
+  "kind": "ente",
+  "profile": "Direzione Regionale Sviluppo Economico, Attività Produttive e Ricerca – Area Innovazione e Ricerca per le Imprese.",
+  "email": "arearicercaeinnovazione@pec.regione.lazio.it",
+  "note": "PEC per la manifestazione di interesse del Soggetto Cardine, entro il 5 novembre 2026."
+ }
+};
+const INT = {"PMI":0.6,"Startup innovativa":0.6,"Grande impresa":0.4,"Organismo di Ricerca":0.8};
+const P = [
+ {
+  "n": 1,
+  "title": "AgriFood Value Chain Intelligence",
+  "sub": "Piattaforma federata di filiera dal produttore al consumatore, con tracciabilità di lotto e AI agentica",
+  "budget": 1400,
+  "green": false,
+  "riserva": false,
+  "tag": "Digitale · Agrifood",
+  "desc": [
+   "Il progetto sviluppa un’infrastruttura federata che collega ERP, dati di campo, sistemi qualità e canali distributivi degli operatori della filiera, ciascuno con il controllo dei propri dati. L’identità digitale verificabile di prodotto e lotto rende la tracciabilità consultabile lungo tutta la catena.",
+   "Agenti AI riconciliano i dati, segnalano anomalie e scostamenti di conformità e propongono raccomandazioni tracciabili, sempre sotto supervisione umana. Il punto di partenza è l’impianto TRAMA, sviluppato per il bando Collabora & Innova di Regione Lombardia e adattato alle filiere laziali."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Intelligenza artificiale, interoperabilità dei dati, tracciabilità"
+  ],
+  "ris3": [
+   "Agrifood",
+   "Digitalizzazione e tracciabilità della filiera agroalimentare",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai componenti TRAMA validati in ambiente controllato alla piattaforma dimostrata su una filiera pilota laziale",
+  "del": "Piattaforma federata con modulo di tracciabilità di lotto, cruscotti di conformità e agenti AI di supporto",
+  "sfr": "Soluzione in licenza per consorzi, cooperative, trasformatori e GDO; replicabile su più filiere",
+  "pilot": "Filiera pilota con produttori, trasformatori e distributori (con Confagricoltura)",
+  "parts": [
+   [
+    "argologica",
+    "ERP e processi AgriFood · mandatario di progetto",
+    428
+   ],
+   [
+    "startupluiss",
+    "Modelli di machine learning per previsione e anomalie",
+    440
+   ],
+   [
+    "dot",
+    "Piattaforma federata e AI agentica",
+    322
+   ],
+   [
+    "luiss",
+    "Disegno della ricerca e co-design con la filiera",
+    210
+   ]
+  ]
+ },
+ {
+  "n": 2,
+  "title": "Consumer Companion & Immersive",
+  "sub": "Informazioni verificate su origine e qualità per il consumatore ed esperienze immersive",
+  "budget": 700,
+  "green": false,
+  "riserva": false,
+  "tag": "Digitale · Industrie creative",
+  "desc": [
+   "Il progetto sviluppa un assistente digitale per il consumatore che presenta in modo comprensibile e verificabile provenienza, caratteristiche e tracciabilità dei prodotti, a partire dai dati della piattaforma di filiera.",
+   "Le informazioni diventano esperienze immersive nel punto vendita e online. La sperimentazione misura comprensione, fiducia e propensione all’acquisto su un campione di utenti."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Realtà estesa, interfacce conversazionali"
+  ],
+  "ris3": [
+   "Industrie creative digitali",
+   "Contenuti e interfacce immersive per la valorizzazione dei prodotti",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai prototipi di interfaccia in laboratorio al servizio dimostrato in punti vendita pilota",
+  "del": "Consumer companion multicanale e format immersivo per punto vendita ed e-commerce",
+  "sfr": "Servizio per marchi agroalimentari, consorzi di tutela e insegne della distribuzione",
+  "pilot": "Punti vendita e canali e-commerce dei produttori della filiera pilota",
+  "parts": [
+   [
+    "ecoh",
+    "Contenuti e consumer companion · mandatario di progetto",
+    300
+   ],
+   [
+    "immersive",
+    "Esperienza immersiva in negozio e online",
+    260
+   ],
+   [
+    "luiss",
+    "Consumer research e test con gli utenti",
+    140
+   ]
+  ]
+ },
+ {
+  "n": 3,
+  "title": "AgriWater Digital Twin",
+  "sub": "Gemello digitale di reti e impianti irrigui con Control Room predittiva",
+  "budget": 1250,
+  "green": true,
+  "riserva": false,
+  "tag": "Clean tech · Digitale",
+  "desc": [
+   "Il progetto collega in un Digital Twin asset irrigui, cartografia, dati meteorologici, sensori IoT e rilievi da drone. La Control Room aggrega indicatori, condizioni operative e anomalie e simula scenari di fabbisogno e disponibilità.",
+   "Agenti AI suggeriscono priorità di intervento con la supervisione degli operatori. Le componenti nate per la depurazione (DIGI4CAST, Control Room multidominio) vengono adattate e validate sulla gestione irrigua."
+  ],
+  "step": [
+   "Tecnologie pulite",
+   "Gestione efficiente della risorsa idrica, Digital Twin"
+  ],
+  "ris3": [
+   "Green economy",
+   "Monitoraggio e gestione intelligente delle risorse idriche",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai moduli validati sugli impianti di depurazione al Digital Twin dimostrato su una rete irrigua reale",
+  "del": "Digital Twin della rete pilota, Control Room predittiva e modelli di fabbisogno e anomalia",
+  "sfr": "Piattaforma per consorzi di bonifica, gestori idrici e grandi aziende agricole",
+  "pilot": "Rete irrigua di un consorzio o gestore laziale (Acea, Acqualatina o APS Sabina da coinvolgere)",
+  "parts": [
+   [
+    "dot",
+    "Control Room, Digital Twin e AI agentica · mandatario di progetto",
+    500
+   ],
+   [
+    "h4r",
+    "Sensoristica di campo e rilievi da drone",
+    437.5
+   ],
+   [
+    "roma3",
+    "Modelli predittivi di fabbisogno e anomalia",
+    250
+   ],
+   [
+    "luiss",
+    "Valutazione degli impatti e KPI",
+    62.5
+   ]
+  ]
+ },
+ {
+  "n": 4,
+  "title": "Earth Observation per acqua e territorio",
+  "sub": "Dati satellitari e modelli di stress idrico e vulnerabilità territoriale",
+  "budget": 900,
+  "green": true,
+  "riserva": false,
+  "tag": "Digitale · Clean tech",
+  "desc": [
+   "Il progetto sviluppa prodotti da osservazione della Terra per stimare stress idrico delle colture, vulnerabilità del territorio e rischio di produzione, integrando dati satellitari, meteo e rilievi a terra.",
+   "I prodotti sono pensati per gestori irrigui e consorzi e alimentano gli altri progetti dell’Insieme (AgriWater, Value Chain, Supply Chain) con indicatori comuni."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Osservazione della Terra, analisi geospaziale"
+  ],
+  "ris3": [
+   "Green economy",
+   "Servizi geospaziali per l’agricoltura e il territorio",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dagli algoritmi validati su dati storici ai servizi dimostrati su un’area pilota con gli utilizzatori",
+  "del": "Catalogo di indicatori di stress idrico e vulnerabilità, servizio di consultazione per gli operatori",
+  "sfr": "Servizi in abbonamento per consorzi, assicurazioni agricole ed enti territoriali",
+  "pilot": "Distretto irriguo condiviso con il progetto P3",
+  "parts": [
+   [
+    "spatial",
+    "Prodotti da osservazione della Terra per gli operatori · mandatario di progetto",
+    360
+   ],
+   [
+    "telespazio",
+    "Dati satellitari e modelli di stress idrico",
+    315
+   ],
+   [
+    "roma3",
+    "Validazione scientifica dei modelli",
+    135
+   ],
+   [
+    "luiss",
+    "Co-design con consorzi e gestori",
+    90
+   ]
+  ]
+ },
+ {
+  "n": 5,
+  "title": "Strategic Supply Chain",
+  "sub": "Assistente AI per le decisioni strategiche di rete distributiva e gestione dei materiali",
+  "budget": 1100,
+  "green": false,
+  "riserva": false,
+  "tag": "Digitale",
+  "desc": [
+   "Il progetto sviluppa un assistente strategico che rappresenta il contesto aziendale, esplicita obiettivi e vincoli e costruisce alternative di network design e material management, con simulazione di scenari e spiegazione delle raccomandazioni.",
+   "Tre casi d’uso: scelta della politica di gestione dei materiali, disegno della rete distributiva, stress test su shock di produzione agricola, disponibilità idrica e domanda. La responsabilità decisionale resta ai dirigenti."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Intelligenza artificiale, ottimizzazione e simulazione"
+  ],
+  "ris3": [
+   "Agrifood",
+   "Logistica e organizzazione della filiera agroalimentare",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai modelli di ottimizzazione validati in laboratorio all’assistente dimostrato su casi aziendali reali",
+  "del": "Assistente decisionale con modello semantico, motore di scenari e interfaccia conversazionale",
+  "sfr": "Servizio per PMI agroalimentari e operatori logistici con competenze manageriali limitate",
+  "pilot": "Casi reali della PMI pilota e di produttori e distributori della filiera",
+  "parts": [
+   [
+    "dot",
+    "Orchestrazione agentica e interfacce decisionali · mandatario di progetto",
+    440
+   ],
+   [
+    "pilota",
+    "Casi d’uso reali e validazione",
+    385
+   ],
+   [
+    "torvergata",
+    "Guida scientifica: ottimizzazione e simulazione",
+    220
+   ],
+   [
+    "luiss",
+    "Raccordo metodologico",
+    55
+   ]
+  ]
+ },
+ {
+  "n": 6,
+  "title": "AgriForest & Climate Resilience",
+  "sub": "Monitoraggio di aree agricole e forestali con droni e presidi energetici autonomi",
+  "budget": 1250,
+  "green": true,
+  "riserva": false,
+  "tag": "Clean tech · Green economy",
+  "desc": [
+   "Il progetto sviluppa presidi modulari alimentati da fotovoltaico e accumulo, con sensori meteoclimatici e ricarica per droni, e un sistema che orchestra le missioni in base a priorità di osservazione, meteo ed energia disponibile.",
+   "Le osservazioni confluiscono in modelli territoriali aggiornabili per individuare anomalie vegetative, idriche e termiche. Il pilota parte dai sensori già installati nel bosco di Ferentino, in raccordo con Protezione Civile e Vigili del Fuoco."
+  ],
+  "step": [
+   "Tecnologie pulite",
+   "Energia rinnovabile e accumulo per il monitoraggio ambientale"
+  ],
+  "ris3": [
+   "Green economy",
+   "Monitoraggio ambientale e prevenzione dei rischi",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai componenti di sensoristica e ricarica già installati al sistema integrato dimostrato nell’area di Ferentino",
+  "del": "Presidio energetico modulare, sistema di orchestrazione delle missioni e cruscotto delle anomalie",
+  "sfr": "Soluzione per enti di gestione forestale, Protezione Civile, parchi e grandi aziende agricole",
+  "pilot": "Area boschiva di Ferentino",
+  "parts": [
+   [
+    "oncharge",
+    "Presidi energetici e sensori · mandatario di progetto",
+    562.5
+   ],
+   [
+    "h4r",
+    "Droni, docking e sensoristica",
+    375
+   ],
+   [
+    "roma3",
+    "Analisi delle anomalie vegetative e termiche",
+    250
+   ],
+   [
+    "luiss",
+    "Impostazione metodologica e valutazione degli impatti",
+    62.5
+   ]
+  ]
+ },
+ {
+  "n": 7,
+  "title": "Agri Cyber Resilience",
+  "sub": "Sicurezza delle reti IoT/OT e dei dati di filiera",
+  "budget": 700,
+  "green": false,
+  "riserva": true,
+  "tag": "Digitale · Sicurezza",
+  "desc": [
+   "Il progetto protegge le reti di sensori, gli impianti connessi e i flussi di dati dei progetti dell’Insieme: monitoraggio continuo, individuazione delle anomalie e risposta coordinata agli incidenti.",
+   "Una linea specifica riguarda la sicurezza delle connessioni satellitari usate nei siti remoti. Il progetto concorre alla riserva dell’Avviso per Aerospazio e Sicurezza."
+  ],
+  "step": [
+   "Tecnologie digitali",
+   "Cybersecurity di sistemi IoT/OT e connessioni satellitari"
+  ],
+  "ris3": [
+   "Sicurezza",
+   "Sicurezza delle infrastrutture e dei dati",
+   "Traiettoria da indicare (Appendice 5)"
+  ],
+  "trl": "Dai moduli di monitoraggio validati in laboratorio alla protezione dimostrata sui siti pilota dell’Insieme",
+  "del": "Sistema di monitoraggio e risposta per reti IoT/OT agricole e linee guida di sicurezza",
+  "sfr": "Servizio gestito per operatori della filiera, consorzi e gestori di infrastrutture",
+  "pilot": "Siti pilota dei progetti P3 e P6",
+  "parts": [
+   [
+    "pmicyber",
+    "Sicurezza IoT/OT · mandatario di progetto",
+    350
+   ],
+   [
+    "dot",
+    "Integrazione con la piattaforma comune",
+    175
+   ],
+   [
+    "cyber40",
+    "Validazione e metodologie di sicurezza",
+    140
+   ],
+   [
+    "luiss",
+    "Governance dei dati e valutazione",
+    35
+   ]
+  ]
+ }
+];
+
+// Coach (Voce D): a carico di LUISS come Soggetto Cardine, ripartito pro quota sui progetti in base al budget
+const COACH = {day:420, dpw:3, weeks:78};
+const COACH_EUR = COACH.day * COACH.dpw * COACH.weeks;
+const COACH_TOT = COACH_EUR * 1.2 / 1000;
+const COACH_FREE = [];
+const BASE = P.filter(p => !COACH_FREE.includes(p.n)).reduce((a, p) => a + p.budget, 0);
+P.forEach(p => { const free = COACH_FREE.includes(p.n); const c = free ? 0 : COACH_TOT * p.budget / BASE; p.parts.push(['luiss', 'Coach dell’Insieme (Voce D, quota del progetto)', c]); p.budget = p.budget + c; });
+
+// calcoli
+P.forEach(p => {
+  p.rows = p.parts.map(([id, role, sp]) => { const e = ENT[id]; const i = INT[e.type]; return {id, e, role, sp, i, c: Math.round(sp * i)}; });
+  p.contrib = p.rows.reduce((a, r) => a + r.c, 0);
+  p.pmi = p.rows.filter(r => r.e.kind === 'imp' && r.e.type !== 'Grande impresa').reduce((a, r) => a + r.sp, 0);
+  p.gi = p.rows.filter(r => r.e.kind === 'imp' && r.e.type === 'Grande impresa').reduce((a, r) => a + r.sp, 0);
+  p.tp = p.rows.filter(r => r.e.kind === 'cardine').reduce((a, r) => a + r.sp, 0);
+  p.odr = p.rows.filter(r => r.e.kind === 'odr').reduce((a, r) => a + r.sp, 0);
+  p.hasOdr = p.odr > 0;
+});
+const TOT = P.reduce((a, p) => ({sp: a.sp + p.budget, c: a.c + p.contrib, pmi: a.pmi + p.pmi, gi: a.gi + p.gi, tp: a.tp + p.tp, odr: a.odr + p.odr}), {sp:0, c:0, pmi:0, gi:0, tp:0, odr:0});
+const byEnt = {};
+P.forEach(p => p.rows.forEach(r => { (byEnt[r.id] ||= {sp:0, c:0, ps:[]}); byEnt[r.id].sp += r.sp; byEnt[r.id].c += r.c; if (!byEnt[r.id].ps.includes(p.n)) byEnt[r.id].ps.push(p.n); }));
+
+const fmt = n => Math.round(n).toLocaleString('it-IT');
+const meur = k => (k / 1000).toLocaleString('it-IT', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' M€';
+const pct = (a, b) => Math.round(a / b * 100);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pctOf = (r, p) => Math.round(r.sp / p.budget * 100);
+const companies = Object.keys(ENT).filter(k => ENT[k].kind === 'imp');
+const nImp = companies.filter(k => byEnt[k]).length;
+
+function bars(p){ return `<div class="mini" aria-hidden="true"><i style="width:${p.pmi/p.budget*100}%;background:var(--pmi)"></i><i style="width:${p.gi/p.budget*100}%;background:var(--gi)"></i><i style="width:${p.tp/p.budget*100}%;background:var(--tp)"></i><i style="width:${p.odr/p.budget*100}%;background:var(--odr)"></i></div>`; }
+function badges(p){ return (p.riserva ? '<span class="chip blue">Riserva Aerospazio e Sicurezza</span>' : '') + (p.green ? '<span class="chip warm">Premialità ambientale</span>' : ''); }
+const nOdr = Object.keys(ENT).filter(k => ENT[k].kind === 'odr' && byEnt[k]).length;
+
+function viewInsieme(){
+  const cards = P.map(p => `
+    <a class="pcard" href="#p${p.n}">
+      <div class="top"><span class="pn">P${p.n}</span><span class="chip">${esc(p.tag)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      <div class="d">${esc(p.sub)}</div>
+      <div class="money"><b>${meur(p.budget)}</b><span>contributo <strong class="num">${fmt(p.contrib)} k€</strong></span></div>
+      ${bars(p)}
+      <div class="who">${Object.values(p.rows.reduce((m, r) => { (m[r.id] ||= {e:r.e, sp:0}).sp += r.sp; return m; }, {})).map(r => `<b>${esc(r.e.name)}</b> ${pctOf(r,p)}%`).join(' · ')}</div>
+      <div class="chips">${badges(p)}</div>
+      <span class="open">Apri il progetto →</span>
+    </a>`).join('');
+  return `
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Avviso Filiere Tecnologiche · PR FESR Lazio 2021–2027</div>
+      <h1>AgriTech &amp; AgriFood Resilience Lazio</h1>
+      <p class="lead">Dati, Digital Twin e AI agentica lungo tutta la filiera agroalimentare del Lazio: dall’acqua e dal territorio alla produzione, alla supply chain e al consumatore.</p>
+      <div class="chips" style="margin-top:14px">
+        <span class="chip dark">Soggetto Cardine: LUISS · Organismo di Ricerca</span>
+        <span class="chip">Coach · coordinamento scientifico</span>
+        <span class="chip teal">Dipartimento di Business and Management</span>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi ink"><div class="k-l">Spese ammissibili</div><div class="k-v">${meur(TOT.sp)}</div></div>
+      <div class="kpi"><div class="k-l">Progetti</div><div class="k-v">${P.length}</div><div class="k-s">${nImp} imprese · ${nOdr} OdR + LUISS</div></div>
+      <div class="kpi teal"><div class="k-l">Contributo stimato</div><div class="k-v">≈ ${meur(TOT.c)}</div><div class="k-s">${pct(TOT.c, TOT.sp)}% medio</div></div>
+      <div class="kpi"><div class="k-l">Quota LUISS, Coach incluso</div><div class="k-v num">${fmt(TOT.tp)} k€</div><div class="k-s">${(TOT.tp/TOT.sp*100).toLocaleString('it-IT',{maximumFractionDigits:1})}% delle spese</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Ripartizione delle spese</h2></div>
+    <div class="split" role="img" aria-label="PMI ${fmt(TOT.pmi)} mila euro, grandi imprese ${fmt(TOT.gi)} mila euro, LUISS ${fmt(TOT.tp)} mila euro, altri Organismi di Ricerca ${fmt(TOT.odr)} mila euro">
+      <div class="s-pmi" style="width:${TOT.pmi/TOT.sp*100}%">PMI ${fmt(TOT.pmi)} k€ · ${pct(TOT.pmi,TOT.sp)}%</div>
+      ${TOT.gi ? `<div class="s-gi" style="width:${TOT.gi/TOT.sp*100}%">GI ${fmt(TOT.gi)}</div>` : ''}
+      <div class="s-tp" style="width:${TOT.tp/TOT.sp*100}%">${fmt(TOT.tp)}</div>
+      <div class="s-odr" style="width:${TOT.odr/TOT.sp*100}%">OdR ${fmt(TOT.odr)}</div>
+    </div>
+    <div class="legend"><span><i style="background:var(--pmi)"></i>PMI e startup (60%)</span><span><i style="background:var(--gi)"></i>Grandi imprese (40%)</span><span><i style="background:var(--tp)"></i>LUISS, Cardine (80%)</span><span><i style="background:var(--odr)"></i>Altri Organismi di Ricerca (80%)</span></div>
+  </section>
+
+
+  <section>
+    <div class="sec-h"><h2>Il tema e gli ambiti dell’Avviso</h2></div>
+    <div class="grid4">
+      <div class="box"><h3 style="color:var(--accent)">STEP · Digitale</h3><p>AI agentica, Digital Twin, osservazione della Terra, interoperabilità dei dati, cybersecurity.</p></div>
+      <div class="box"><h3 style="color:var(--warm)">STEP · Clean tech</h3><p>Gestione della risorsa idrica ed energia rinnovabile. Tre progetti concorrono alla premialità ambientale.</p></div>
+      <div class="box"><h3 style="color:var(--blue)">AdS RIS3 Lazio</h3><p>Agrifood, Green economy, Industrie creative digitali e Sicurezza. Traiettorie dell’Appendice 5 da indicare per ciascun progetto.</p></div>
+      <div class="box inv"><h3>Architettura condivisa</h3><p>Dati federati, tracciabilità verificabile e AI con supervisione umana, con KPI e protocolli di validazione comuni a tutti i progetti.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>${P.length} progetti</h2><div class="legend" style="margin:0"><span><i style="background:var(--pmi)"></i>PMI</span><span><i style="background:var(--gi)"></i>GI</span><span><i style="background:var(--tp)"></i>LUISS</span><span><i style="background:var(--odr)"></i>OdR</span></div></div>
+    <div class="grid3">${cards}</div>
+  </section>
+
+  <section>
+    <div class="grid3" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
+      <div class="box">
+        <h3 style="color:var(--accent)">Vincoli dell’Avviso rispettati</h3>
+        <ul class="checks">
+          <li>Almeno 4 progetti idonei e 5 M€ di spese</li>
+          <li>Ogni progetto almeno 400 k€ (tipologia B)</li>
+          <li>PMI almeno al 30% di ogni progetto</li>
+          <li>Cardine + OdR entro il 30% di ogni progetto</li>
+          <li>Al massimo 3 beneficiari oltre al Cardine</li>
+          <li>Collaborazione effettiva: OdR almeno al 10%, oppure nessuna impresa oltre il 70%</li>
+          <li>Contributo sotto 3 M€ per progetto</li>
+          <li>Durata 18 mesi, SAL entro il 10° mese</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3 style="color:var(--warm)">Punti aperti</h3>
+        <ol class="issues">
+          <li>Obblighi di pubblicità del Soggetto Cardine (art. 4): verificare che LUISS li abbia completati, altrimenti i progetti non sono ammissibili</li>
+          <li>Status di Organismo di Ricerca di LUISS e di Cyber 4.0 da confermare</li>
+          <li>Gruppo Effort Cube (Dot Beyond, Argo Logica): se è grande impresa l’intensità scende al 40%. In ogni progetto le PMI indipendenti restano almeno al 30%</li>
+          <li>Da individuare: Startup LUISS, PMI pilota della supply chain (indipendente dal gruppo), PMI cyber</li>
+          <li>NOREMA è fuori dai progetti per il limite di 3 beneficiari oltre al Cardine: decidere se e dove inserirla</li>
+          <li>Integrazioni in valutazione: formazione Agri con l’Istituto Agrario, progetto Biogis, SicuraNext sulla sicurezza</li>
+          <li>Premio della fideiussione da aggiungere; Coach da dimensionare con LUISS. Domande dal 7 al 28 gennaio 2027</li>
+        </ol>
+      </div>
+    </div>
+  </section>`;
+}
+
+function viewProject(n){
+  const p = P[n - 1];
+  const prev = P[n - 2], next = P[n];
+  const rows = p.rows.map(r => `
+    <tr>
+      <td class="ename"><a href="#anagrafica" data-ent="${r.id}">${esc(r.e.name)}</a><span class="etype">${esc(r.e.type)}${r.e.tbc ? ' · ruolo da confermare' : ''}</span></td>
+      <td>${esc(r.role)}</td>
+      <td class="r">${pctOf(r,p)}%</td>
+      <td class="r">${fmt(r.sp)}</td>
+      <td class="r">${Math.round(r.i*100)}%</td>
+      <td class="r">${fmt(r.c)}</td>
+    </tr>`).join('');
+  const collab = p.hasOdr ? `Collaborazione effettiva garantita dall’Organismo di Ricerca (${pct(p.odr,p.budget)}% delle spese).` : `Collaborazione effettiva garantita da LUISS come Organismo di Ricerca (${pct(p.tp,p.budget)}% delle spese, Coach incluso).`;
+  return `
+  <a class="back" href="#insieme">← Torna all’Insieme</a>
+  <div class="phead">
+    <div class="big">P${p.n}</div>
+    <div><h1>${esc(p.title)}</h1><p>${esc(p.sub)}</p></div>
+  </div>
+
+  <section>
+    <div class="two">
+      <div class="prose">
+        <div class="sec-h"><h2>Il progetto</h2></div>
+        ${p.desc.map(t => `<p>${esc(t)}</p>`).join('')}
+        <div class="chips" style="margin-top:8px">${badges(p)}<span class="chip">Pilota: ${esc(p.pilot)}</span></div>
+      </div>
+      <div class="box amb">
+        <h3 style="color:var(--accent)">Ambito</h3>
+        <dl>
+          <div><dt>STEP · ${esc(p.step[0])}</dt><dd>${esc(p.step[1])}</dd></div>
+          <div><dt>RIS3 · ${esc(p.ris3[0])}</dt><dd>${esc(p.ris3[1])}</dd><div class="lvl">${esc(p.ris3[2])}</div></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Obiettivo realizzativo e risultati</h2></div>
+    <div class="grid3">
+      <div class="box"><h3 style="color:var(--accent)">Da TRL 4 a TRL 7</h3><p>${esc(p.trl)}</p></div>
+      <div class="box"><h3 style="color:var(--accent)">Deliverable</h3><p>${esc(p.del)}</p></div>
+      <div class="box"><h3 style="color:var(--accent)">Sfruttamento</h3><p>${esc(p.sfr)}</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Partenariato e budget</h2><span class="chip teal">${new Set(p.rows.filter(r => r.e.kind !== 'cardine').map(r => r.id)).size} beneficiari + LUISS</span></div>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Soggetto</th><th>Ruolo</th><th class="r">Quota</th><th class="r">Spese k€</th><th class="r">Intensità</th><th class="r">Contributo k€</th></tr></thead>
+        <tbody>${rows}
+          <tr class="tot"><td>Totale</td><td></td><td class="r">100%</td><td class="r">${fmt(p.budget)}</td><td class="r">${pct(p.contrib,p.budget)}%</td><td class="r">${fmt(p.contrib)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">${collab} Tipologia B, durata 18 mesi. Spese comprensive del forfait del 20% e della quota del Coach. Intensità del 60% ipotizzata per tutte le PMI: per le medie imprese è il 50%, per le imprese di un gruppo di grandi dimensioni il 40%.</p>
+  </section>
+
+  <nav class="pager" aria-label="Altri progetti">
+    ${prev ? `<a href="#p${prev.n}"><small>← P${prev.n}</small><b>${esc(prev.title)}</b></a>` : '<span></span>'}
+    ${next ? `<a href="#p${next.n}" style="text-align:right"><small>P${next.n} →</small><b>${esc(next.title)}</b></a>` : `<a href="#anagrafica" style="text-align:right"><small>Poi →</small><b>Anagrafica</b></a>`}
+  </nav>`;
+}
+
+let filt = 'tutti', q = '';
+function entCard(id){
+  const e = ENT[id], b = byEnt[id];
+  const plinks = b ? b.ps.map(n => `<a href="#p${n}">P${n}</a>`).join('') : '<span class="chip tbc">Non assegnata</span>';
+  const data = [];
+  if (e.sede) data.push(['Sede', esc(e.sede)]);
+  if (e.piva) data.push(['P.IVA', `<span class="num">${esc(e.piva)}</span>`]);
+  if (e.web) data.push(['Sito', esc(e.web)]);
+  if (b) data.push(['Spese', `<span class="num">${fmt(b.sp)} k€ · contributo ${fmt(b.c)} k€</span>`]);
+  const cont = [];
+  if (e.ref) cont.push(`<div>${esc(e.ref)}</div>`);
+  if (e.email) cont.push(`<div><span class="num">${esc(e.email)}</span><button type="button" class="copy" data-copy="${esc(e.email)}">Copia</button></div>`);
+  if (e.tel) cont.push(`<div class="num">${esc(e.tel)}</div>`);
+  const typeChip = e.kind === 'odr' ? 'warm' : e.kind === 'ente' ? 'blue' : e.kind === 'cardine' ? 'dark' : 'teal';
+  return `<article class="ecard" id="ent-${id}">
+    <div class="row"><h3>${esc(e.name)}</h3><span class="chip ${typeChip}">${esc(e.type)}</span></div>
+    <p class="prof">${esc(e.profile)}${e.tbc ? ' <span class="chip tbc">Profilo da confermare</span>' : ''}</p>
+    ${e.kind !== 'ente' ? `<div class="plinks">${plinks}</div>` : ''}
+    ${data.length ? `<dl>${data.map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>` : ''}
+    ${e.note ? `<p class="prof">${esc(e.note)}</p>` : ''}
+    ${cont.length ? `<div class="contact">${cont.join('')}</div>` : ''}
+  </article>`;
+}
+function entList(){
+  const order = ['cardine','odr','imp','ente'];
+  return Object.keys(ENT)
+    .filter(id => filt === 'tutti' || (filt === 'imp' ? ENT[id].kind === 'imp' : filt === 'odr' ? ENT[id].kind === 'odr' : ['ente','cardine'].includes(ENT[id].kind)))
+    .filter(id => !q || (ENT[id].name + ' ' + ENT[id].profile).toLowerCase().includes(q))
+    .sort((a, b) => order.indexOf(ENT[a].kind) - order.indexOf(ENT[b].kind) || (byEnt[b]?.sp || 0) - (byEnt[a]?.sp || 0));
+}
+function viewAnagrafica(){
+  const ids = Object.keys(ENT).filter(id => byEnt[id]).sort((a,b) => {const o=['cardine','odr','imp']; return o.indexOf(ENT[a].kind)-o.indexOf(ENT[b].kind) || byEnt[b].sp-byEnt[a].sp;});
+  const mrows = ids.map(id => `<tr><td class="ename">${esc(ENT[id].name)}<span class="etype">${esc(ENT[id].type)}</span></td>${P.map(p => { const rs = p.rows.filter(x => x.id === id); const r = rs.length ? {sp: rs.reduce((a, x) => a + x.sp, 0)} : null; return r ? `<td class="c on">${fmt(r.sp)}</td>` : '<td class="c"></td>'; }).join('')}<td class="r">${fmt(byEnt[id].sp)}</td></tr>`).join('');
+  return `
+  <div class="eyebrow">Anagrafica</div>
+  <h1 style="font-size:clamp(30px,4vw,44px); margin:6px 0 10px">Imprese, Organismi di Ricerca, stakeholder ed enti</h1>
+  <p class="lead">${nImp} imprese, ${nOdr} Organismi di Ricerca, il Soggetto Cardine, gli stakeholder e gli enti dell’Avviso. I profili segnati in giallo sono ipotesi da far confermare a ciascun soggetto.</p>
+
+  <section>
+    <div class="tools">
+      <div class="filter" role="group" aria-label="Filtra per tipo">
+        <button type="button" data-f="tutti" aria-pressed="${filt==='tutti'}">Tutti</button>
+        <button type="button" data-f="imp" aria-pressed="${filt==='imp'}">Imprese</button>
+        <button type="button" data-f="odr" aria-pressed="${filt==='odr'}">Organismi di Ricerca</button>
+        <button type="button" data-f="enti" aria-pressed="${filt==='enti'}">Cardine, stakeholder ed enti</button>
+      </div>
+      <div class="search"><label for="q">Cerca</label><input id="q" type="search" placeholder="Nome o competenza" value="${esc(q)}"></div>
+    </div>
+    <div class="ecards" id="ecards">${entList().map(entCard).join('')}</div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Chi fa cosa: spese per progetto (k€)</h2></div>
+    <div class="tablebox">
+      <table class="matrix">
+        <thead><tr><th>Soggetto</th>${P.map(p => `<th class="c"><a href="#p${p.n}">P${p.n}</a></th>`).join('')}<th class="r">Totale</th></tr></thead>
+        <tbody>${mrows}<tr class="tot"><td>Totale</td>${P.map(p => `<td class="c">${fmt(p.budget)}</td>`).join('')}<td class="r">${fmt(TOT.sp)}</td></tr></tbody>
+      </table>
+    </div>
+  </section>`;
+}
+
+const view = document.getElementById('view');
+const pnav = document.getElementById('pnav');
+pnav.innerHTML = P.map(p => `<a href="#p${p.n}" data-nav="p${p.n}">P${p.n}</a>`).join('');
+
+function render(){
+  const h = (location.hash || '#insieme').slice(1);
+  let html, cur = h;
+  const m = /^p([1-9])$/.exec(h);
+  if (m && P[+m[1]-1]) html = viewProject(+m[1]);
+  else if (h === 'anagrafica') html = viewAnagrafica();
+  else { html = viewInsieme(); cur = 'insieme'; }
+  view.innerHTML = html + `<footer><span>Ipotesi di lavoro. Stime indicative.</span><div class="credit"><span>Realizzato da</span><a class="nm" href="https://www.norema.eu" target="_blank" rel="noopener" title="NOREMA S.r.l. – norema.eu"><svg xmlns="http://www.w3.org/2000/svg" viewBox="140 290 1640 500" role="img" aria-label="NOREMA"> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 350.476562 780.890625 L 350.476562 678.445312 C 350.476562 665.824219 347.972656 653.699219 343.03125 642.410156 C 338.117188 631.207031 331.417969 621.320312 323.121094 613.023438 C 314.824219 604.726562 304.941406 598.03125 293.734375 593.113281 C 282.441406 588.171875 270.320312 585.664062 257.699219 585.664062 C 245.070312 585.664062 232.945312 588.171875 221.664062 593.113281 C 210.460938 598.023438 200.578125 604.722656 192.277344 613.023438 C 183.964844 621.335938 177.265625 631.222656 172.367188 642.40625 C 167.425781 653.675781 164.917969 665.804688 164.917969 678.445312 L 164.917969 733.761719 L 155.25 733.761719 L 155.25 678.445312 C 155.25 664.59375 157.929688 651.382812 163.214844 639.183594 C 168.539062 626.898438 175.871094 615.898438 185.003906 606.496094 C 194.097656 597.128906 204.992188 589.613281 217.386719 584.164062 C 229.714844 578.746094 243.277344 576 257.699219 576 C 271.53125 576 284.722656 578.742188 296.90625 584.15625 C 309.1875 589.621094 320.183594 597.15625 329.585938 606.558594 C 338.984375 615.960938 346.523438 626.953125 351.984375 639.238281 C 357.398438 651.425781 360.144531 664.613281 360.144531 678.445312 L 360.144531 780.890625 Z M 350.476562 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 500.644531 585.664062 C 488.015625 585.664062 475.890625 588.171875 464.609375 593.113281 C 453.40625 598.023438 443.519531 604.722656 435.222656 613.023438 C 426.910156 621.335938 420.210938 631.222656 415.308594 642.40625 C 410.367188 653.679688 407.863281 665.804688 407.863281 678.445312 C 407.863281 691.089844 410.371094 703.214844 415.3125 714.480469 C 420.207031 725.660156 426.90625 735.546875 435.222656 743.863281 C 443.535156 752.179688 453.425781 758.878906 464.609375 763.777344 C 475.871094 768.71875 487.996094 771.222656 500.644531 771.222656 C 513.28125 771.222656 525.40625 768.71875 536.679688 763.777344 C 547.867188 758.875 557.753906 752.175781 566.066406 743.863281 C 574.367188 735.5625 581.066406 725.675781 585.972656 714.476562 C 590.917969 703.195312 593.421875 691.074219 593.421875 678.445312 C 593.421875 665.820312 590.917969 653.695312 585.976562 642.410156 C 581.0625 631.207031 574.363281 621.320312 566.066406 613.023438 C 557.769531 604.726562 547.882812 598.027344 536.679688 593.113281 C 525.386719 588.171875 513.265625 585.664062 500.644531 585.664062 M 500.644531 780.890625 C 486.203125 780.890625 472.621094 778.207031 460.28125 772.917969 C 447.878906 767.605469 436.980469 760.296875 427.890625 751.199219 C 418.789062 742.101562 411.480469 731.207031 406.171875 718.808594 C 400.878906 706.464844 398.195312 692.882812 398.195312 678.445312 C 398.195312 664.285156 400.882812 650.773438 406.179688 638.277344 C 411.492188 625.75 418.796875 614.785156 427.890625 605.6875 C 436.992188 596.585938 447.890625 589.28125 460.277344 583.972656 C 472.621094 578.683594 486.199219 576 500.644531 576 C 514.5 576 527.707031 578.679688 539.902344 583.960938 C 552.183594 589.285156 563.179688 596.613281 572.59375 605.75 C 581.949219 614.84375 589.460938 625.804688 594.910156 638.328125 C 600.339844 650.8125 603.089844 664.3125 603.089844 678.445312 C 603.089844 692.859375 600.339844 706.421875 594.917969 718.757812 C 589.46875 731.152344 581.957031 742.042969 572.59375 751.136719 C 563.191406 760.269531 552.191406 767.601562 539.902344 772.925781 C 527.703125 778.210938 514.496094 780.890625 500.644531 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 641.140625 780.890625 L 641.140625 678.445312 C 641.140625 664.285156 643.828125 650.773438 649.125 638.277344 C 654.4375 625.75 661.742188 614.785156 670.835938 605.6875 C 679.9375 596.585938 690.835938 589.28125 703.222656 583.972656 C 715.566406 578.683594 729.144531 576 743.589844 576 C 757.445312 576 770.652344 578.679688 782.847656 583.964844 C 795.125 589.285156 806.125 596.613281 815.539062 605.75 C 824.894531 614.847656 832.40625 625.804688 837.855469 638.328125 C 842.507812 649.03125 845.195312 660.480469 845.867188 672.433594 L 836.175781 672.433594 C 835.503906 661.96875 833.070312 651.894531 828.921875 642.410156 C 824.003906 631.203125 817.308594 621.320312 809.011719 613.023438 C 800.714844 604.726562 790.828125 598.027344 779.625 593.113281 C 768.332031 588.171875 756.210938 585.664062 743.589844 585.664062 C 730.960938 585.664062 718.835938 588.171875 707.554688 593.113281 C 696.351562 598.023438 686.464844 604.722656 678.167969 613.023438 C 669.855469 621.335938 663.15625 631.222656 658.253906 642.40625 C 653.3125 653.679688 650.808594 665.804688 650.808594 678.445312 L 650.808594 780.890625 Z M 641.140625 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 986.535156 585.664062 C 974.816406 585.664062 963.621094 587.78125 953.265625 591.960938 C 943.03125 596.078125 933.644531 601.742188 925.367188 608.792969 C 917.019531 615.910156 910.054688 624.59375 904.667969 634.597656 C 899.316406 644.539062 895.667969 655.316406 893.832031 666.636719 L 892.703125 673.609375 L 1080.367188 673.609375 L 1079.234375 666.636719 C 1077.402344 655.332031 1073.757812 644.554688 1068.398438 634.597656 C 1063 624.578125 1056.039062 615.898438 1047.699219 608.792969 C 1039.421875 601.742188 1029.953125 596.074219 1019.554688 591.945312 C 1009.0625 587.777344 997.949219 585.664062 986.535156 585.664062 M 986.535156 780.890625 C 972.09375 780.890625 958.511719 778.207031 946.171875 772.917969 C 933.769531 767.605469 922.871094 760.296875 913.78125 751.199219 C 904.683594 742.105469 897.375 731.210938 892.0625 718.808594 C 886.769531 706.464844 884.089844 692.882812 884.089844 678.445312 C 884.089844 664.289062 886.773438 650.773438 892.070312 638.277344 C 897.382812 625.746094 904.6875 614.78125 913.78125 605.6875 C 922.882812 596.589844 933.777344 589.28125 946.171875 583.972656 C 958.511719 578.683594 972.09375 576 986.535156 576 C 1000.695312 576 1014.210938 578.683594 1026.703125 583.980469 C 1039.222656 589.289062 1050.1875 596.59375 1059.289062 605.691406 C 1068.382812 614.792969 1075.6875 625.757812 1081 638.277344 C 1086.296875 650.777344 1088.980469 664.292969 1088.980469 678.445312 L 1088.980469 683.277344 L 892.734375 683.277344 L 893.828125 690.226562 C 895.664062 701.859375 899.320312 712.730469 904.6875 722.546875 C 910.0625 732.386719 917.019531 740.984375 925.367188 748.09375 C 933.625 755.132812 943.011719 760.800781 953.269531 764.929688 C 963.632812 769.105469 974.824219 771.222656 986.535156 771.222656 C 1006.207031 771.222656 1023.855469 765.898438 1038.984375 755.398438 C 1052.96875 745.699219 1063.644531 732.792969 1070.761719 716.992188 L 1081.890625 716.992188 C 1078.695312 724.375 1074.707031 731.34375 1069.972656 737.792969 C 1063.574219 746.511719 1055.980469 754.101562 1047.414062 760.351562 C 1038.832031 766.625 1029.207031 771.679688 1018.792969 775.378906 C 1008.496094 779.039062 997.644531 780.890625 986.535156 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 1517.484375 780.890625 L 1517.484375 678.445312 C 1517.484375 665.820312 1514.980469 653.699219 1510.035156 642.410156 C 1505.125 631.210938 1498.429688 621.324219 1490.125 613.023438 C 1481.832031 604.726562 1471.945312 598.027344 1460.742188 593.113281 C 1449.449219 588.171875 1437.328125 585.664062 1424.703125 585.664062 C 1412.078125 585.664062 1399.957031 588.171875 1388.671875 593.113281 C 1377.464844 598.023438 1367.582031 604.722656 1359.285156 613.023438 C 1350.976562 621.332031 1344.277344 631.21875 1339.371094 642.40625 C 1334.429688 653.675781 1331.925781 665.804688 1331.925781 678.445312 L 1331.925781 780.890625 L 1322.261719 780.890625 L 1322.261719 678.445312 C 1322.261719 665.820312 1319.753906 653.695312 1314.8125 642.410156 C 1309.898438 631.210938 1303.199219 621.320312 1294.902344 613.023438 C 1286.605469 604.726562 1276.722656 598.027344 1265.519531 593.113281 C 1254.226562 588.171875 1242.101562 585.664062 1229.480469 585.664062 C 1216.851562 585.664062 1204.726562 588.171875 1193.445312 593.113281 C 1182.242188 598.023438 1172.359375 604.722656 1164.058594 613.023438 C 1155.746094 621.335938 1149.046875 631.222656 1144.148438 642.40625 C 1139.207031 653.675781 1136.699219 665.804688 1136.699219 678.445312 L 1136.699219 780.890625 L 1127.035156 780.890625 L 1127.035156 678.445312 C 1127.035156 664.296875 1129.785156 650.800781 1135.210938 638.328125 C 1140.648438 625.820312 1148.15625 614.855469 1157.53125 605.75 C 1166.941406 596.617188 1177.9375 589.285156 1190.222656 583.964844 C 1202.414062 578.679688 1215.621094 576 1229.480469 576 C 1239.542969 576 1249.390625 577.441406 1258.746094 580.292969 C 1268.113281 583.144531 1276.863281 587.207031 1284.753906 592.371094 C 1292.667969 597.558594 1299.863281 603.714844 1306.144531 610.671875 C 1312.398438 617.609375 1317.640625 625.261719 1321.714844 633.410156 L 1327.09375 644.160156 L 1332.46875 633.410156 C 1336.539062 625.273438 1341.835938 617.640625 1348.214844 610.71875 C 1354.628906 603.757812 1361.972656 597.59375 1370.042969 592.394531 C 1378.082031 587.21875 1386.851562 583.144531 1396.109375 580.285156 C 1405.3125 577.441406 1414.933594 576 1424.703125 576 C 1438.863281 576 1452.378906 578.683594 1464.871094 583.980469 C 1477.394531 589.289062 1488.355469 596.59375 1497.460938 605.691406 C 1506.554688 614.792969 1513.859375 625.757812 1519.167969 638.277344 C 1524.464844 650.769531 1527.148438 664.285156 1527.148438 678.445312 L 1527.148438 780.890625 Z M 1517.484375 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 1667.648438 585.664062 C 1655.019531 585.664062 1642.894531 588.171875 1631.613281 593.113281 C 1620.410156 598.023438 1610.523438 604.722656 1602.226562 613.023438 C 1593.914062 621.335938 1587.214844 631.222656 1582.316406 642.40625 C 1577.375 653.675781 1574.871094 665.800781 1574.871094 678.445312 C 1574.871094 691.09375 1577.375 703.21875 1582.316406 714.480469 C 1587.210938 725.660156 1593.910156 735.546875 1602.226562 743.863281 C 1610.542969 752.179688 1620.429688 758.878906 1631.613281 763.777344 C 1642.878906 768.71875 1655.003906 771.222656 1667.648438 771.222656 C 1680.289062 771.222656 1692.410156 768.71875 1703.683594 763.777344 C 1714.871094 758.875 1724.757812 752.175781 1733.070312 743.863281 C 1741.371094 735.5625 1748.070312 725.675781 1752.980469 714.480469 C 1757.921875 703.195312 1760.429688 691.070312 1760.429688 678.445312 C 1760.429688 665.820312 1757.921875 653.699219 1752.980469 642.410156 C 1748.066406 631.207031 1741.367188 621.320312 1733.070312 613.023438 C 1724.773438 604.726562 1714.890625 598.027344 1703.683594 593.113281 C 1692.394531 588.171875 1680.269531 585.664062 1667.648438 585.664062 M 1760.429688 780.890625 L 1760.429688 725.59375 L 1749.617188 739.894531 C 1740.371094 752.128906 1728.355469 762.132812 1713.902344 769.632812 C 1699.511719 777.105469 1683.953125 780.890625 1667.648438 780.890625 C 1653.207031 780.890625 1639.628906 778.207031 1627.285156 772.917969 C 1614.882812 767.605469 1603.984375 760.296875 1594.894531 751.199219 C 1585.796875 742.105469 1578.488281 731.210938 1573.175781 718.808594 C 1567.886719 706.460938 1565.203125 692.882812 1565.203125 678.445312 C 1565.203125 664.289062 1567.886719 650.773438 1573.183594 638.277344 C 1578.496094 625.746094 1585.800781 614.78125 1594.894531 605.6875 C 1603.992188 596.589844 1614.894531 589.28125 1627.285156 583.972656 C 1639.625 578.683594 1653.207031 576 1667.648438 576 C 1681.808594 576 1695.324219 578.683594 1707.816406 583.980469 C 1720.335938 589.289062 1731.300781 596.59375 1740.40625 605.691406 C 1749.5 614.796875 1756.804688 625.761719 1762.109375 638.277344 C 1767.410156 650.773438 1770.09375 664.289062 1770.09375 678.445312 L 1770.09375 780.890625 Z M 1760.429688 780.890625 "/> <path fill-rule="nonzero" fill="currentColor" fill-opacity="1" d="M 160.457031 779.90625 C 154.640625 779.90625 149.90625 775.171875 149.90625 769.355469 C 149.90625 763.535156 154.640625 758.800781 160.457031 758.800781 C 166.277344 758.800781 171.011719 763.535156 171.011719 769.355469 C 171.011719 775.171875 166.277344 779.90625 160.457031 779.90625 "/> <path fill-rule="nonzero" fill="#0BB9B7" fill-opacity="1" d="M 868.046875 476.855469 C 862.390625 476.855469 857.789062 481.460938 857.789062 487.117188 C 857.789062 492.777344 862.390625 497.378906 868.046875 497.378906 C 873.707031 497.378906 878.308594 492.777344 878.308594 487.117188 C 878.308594 481.460938 873.707031 476.855469 868.046875 476.855469 "/> <path fill-rule="nonzero" fill="#0BB9B7" fill-opacity="1" d="M 1052.8125 488.339844 C 1049.234375 488.730469 1045.578125 488.9375 1041.84375 488.9375 C 1030.457031 488.9375 1019.574219 486.875 1009.496094 482.816406 C 999.527344 478.800781 990.398438 473.289062 982.367188 466.449219 C 974.253906 459.535156 967.488281 451.171875 962.261719 441.605469 C 957.039062 432.0625 953.488281 421.492188 951.703125 410.179688 L 950.632812 403.421875 L 1052.8125 403.421875 Z M 951.707031 387.238281 C 953.492188 376.234375 957.035156 365.75 962.242188 356.085938 C 967.476562 346.359375 974.25 337.917969 982.371094 330.996094 C 988.410156 325.851562 995.054688 321.464844 1002.203125 317.90625 C 1011.230469 322.425781 1019.292969 328.191406 1026.210938 335.109375 C 1034.28125 343.175781 1040.792969 352.789062 1045.574219 363.683594 C 1049.761719 373.25 1052.144531 383.4375 1052.691406 394.023438 L 950.605469 394.023438 Z M 1062.09375 394.023438 C 1061.542969 382.285156 1058.925781 371.058594 1054.28125 360.601562 C 1048.96875 348.65625 1041.640625 337.964844 1032.496094 328.824219 C 1026.566406 322.890625 1019.96875 317.734375 1012.8125 313.386719 C 1009.167969 311.171875 1005.378906 309.167969 1001.449219 307.382812 C 1001.203125 307.273438 1000.96875 307.152344 1000.722656 307.039062 C 988.875 301.777344 976.050781 299.109375 962.597656 299.109375 C 948.578125 299.109375 935.390625 301.78125 923.402344 307.050781 C 911.351562 312.347656 900.757812 319.652344 891.914062 328.761719 C 883.035156 337.90625 875.90625 348.601562 870.730469 360.546875 C 865.589844 372.410156 862.984375 385.253906 862.984375 398.722656 L 862.984375 452.507812 L 872.386719 452.507812 L 872.386719 398.722656 C 872.386719 386.429688 874.824219 374.640625 879.625 363.683594 C 884.390625 352.804688 890.90625 343.191406 898.988281 335.109375 C 907.058594 327.039062 916.667969 320.523438 927.5625 315.75 C 938.53125 310.945312 950.320312 308.507812 962.597656 308.507812 C 972.246094 308.507812 981.585938 310.035156 990.476562 313.015625 C 983.339844 317.234375 976.847656 322.234375 971.101562 327.976562 C 962.261719 336.820312 955.15625 347.480469 949.992188 359.664062 C 944.839844 371.816406 942.230469 384.957031 942.230469 398.722656 C 942.230469 412.761719 944.839844 425.964844 949.980469 437.96875 C 955.148438 450.027344 962.253906 460.621094 971.105469 469.464844 C 979.941406 478.3125 990.535156 485.417969 1002.59375 490.582031 C 1014.597656 495.726562 1027.800781 498.335938 1041.84375 498.335938 C 1045.535156 498.335938 1049.191406 498.109375 1052.8125 497.691406 C 1055.980469 497.324219 1059.117188 496.808594 1062.210938 496.121094 L 1062.210938 398.722656 C 1062.210938 397.144531 1062.167969 395.578125 1062.09375 394.023438 "/> </svg> </a></div><span>Aggiornamento: novembre 2026</span></footer>`;
+  document.querySelectorAll('[data-nav]').forEach(a => { if (a.dataset.nav === cur) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  document.title = cur === 'insieme' ? 'Filiera AgriTech LUISS' : (cur === 'anagrafica' ? 'Anagrafica · Filiera AgriTech LUISS' : `P${m[1]} ${P[+m[1]-1].title} · Filiera AgriTech`);
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', render);
+
+view.addEventListener('click', e => {
+  const f = e.target.closest('[data-f]');
+  if (f){ filt = f.dataset.f; document.querySelectorAll('[data-f]').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === filt)); document.getElementById('ecards').innerHTML = entList().map(entCard).join(''); return; }
+  const c = e.target.closest('[data-copy]');
+  if (c){ const t = c.dataset.copy; const done = () => { c.textContent = 'Copiato'; setTimeout(() => c.textContent = 'Copia', 1500); };
+    try { navigator.clipboard.writeText(t).then(done, () => { selectText(c.previousElementSibling); }); } catch(_) { selectText(c.previousElementSibling); } return; }
+  const en = e.target.closest('[data-ent]');
+  if (en){ e.preventDefault(); const id = en.dataset.ent; filt = 'tutti'; q = ''; location.hash = 'anagrafica'; setTimeout(() => { const el = document.getElementById('ent-' + id); if (el){ el.scrollIntoView({block:'center'}); el.style.outline = '2px solid var(--accent)'; } }, 30); }
+});
+view.addEventListener('input', e => { if (e.target.id === 'q'){ q = e.target.value.trim().toLowerCase(); document.getElementById('ecards').innerHTML = entList().map(entCard).join(''); } });
+function selectText(el){ if (!el) return; const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+render();
+</script>
+</body>
+</html>
